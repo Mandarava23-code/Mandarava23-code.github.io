@@ -1,328 +1,409 @@
+
+
 <!DOCTYPE html>
-<html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
   
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-  <title>Hexo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta property="og:type" content="website">
 <meta property="og:title" content="Hexo">
 <meta property="og:url" content="http://example.com/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="John Doe">
-<meta name="twitter:card" content="summary">
-  
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
-  
-  
-    <link rel="shortcut icon" href="/favicon.png">
+<meta name="twitter:card" content="summary_large_image">
   
   
   
-<link rel="stylesheet" href="/css/style.css">
+  <title>Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
 
   
-    
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
-
-  
-  
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
-
 <meta name="generator" content="Hexo 8.1.1"></head>
 
+
 <body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
-      </h1>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 100vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
         
-          <a class="main-nav-link" href="/">Home</a>
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
         
-          <a class="main-nav-link" href="/archives">Archives</a>
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
         
-      </nav>
-      <nav id="sub-nav">
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
         
         
-          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
-        
-        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
-      </div>
-    </div>
-  </div>
-</header>
-
-      <div class="outer">
-        <section id="main">
-  
-    <article id="post-heya的万事屋ARG" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2025/11/22/heya%E7%9A%84%E4%B8%87%E4%BA%8B%E5%B1%8BARG/" class="article-date">
-  <time class="dt-published" datetime="2025-11-22T07:04:56.045Z" itemprop="datePublished">2025-11-22</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>[!quote] 目前已知社交平台账号<br><strong>bilibili</strong>：</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://space.bilibili.com/20466996"><em>@heya的万事屋(uid20466996)</em></a></li>
-<li><a target="_blank" rel="noopener" href="https://space.bilibili.com/481575858"><em>@黛丝可托普(uid481575858)</em></a></li>
-<li><a target="_blank" rel="noopener" href="https://space.bilibili.com/7763148"><em>@依米yoriko(uid7763148)</em></a>  &#x2F;&#x2F;heya的原b站号</li>
-</ul>
-<hr>
-<hr>
-<p><strong>steam</strong>：</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://steamcommunity.com/id/heyanoheya/"><em>不停赶工H大爷</em></a></li>
-<li><a target="_blank" rel="noopener" href="https://steamcommunity.com/profiles/76561199188250303"><em>天选社畜D某人</em></a></li>
-</ul>
-<hr>
-<hr>
-<p><strong>网易云音乐</strong>：</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://music.163.com/#/artist?id=12396008"><em>YKO_O</em></a></li>
-</ul>
-<hr>
-<hr>
-<p><strong>网易LOFTER</strong>：</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://chiliflower.lofter.com/"><em>CHILI FLOWER</em></a></li>
-</ul>
-</blockquote>
-<h2 id="heya的万事屋"><a href="#heya的万事屋" class="headerlink" title="heya的万事屋"></a>heya的万事屋</h2><h3 id="怪谈万事屋"><a href="#怪谈万事屋" class="headerlink" title="怪谈万事屋"></a>怪谈万事屋</h3><h4 id="01-魔女之家"><a href="#01-魔女之家" class="headerlink" title="#01 魔女之家"></a>#01 魔女之家</h4><ul>
-<li><strong>发布日期</strong>：2023-01-02</li>
-<li><strong>视频内容</strong>：<ul>
-<li><strong>Opening</strong>：<ul>
-<li><strong>文本</strong>：久远的传说中，一位沉睡的王子注定醒来，带给他暗无天日的臣民们一个未来，王子和他的两个勇士将夺取最后的机会，唯一的，仅有的逃出 生天的机会</li>
-<li><strong>倒放音频</strong>：随着机会与希望来的太迟，痴于用血肉和奉献构成的未来，而那个未来，是由痛苦与荆棘之路构成</li>
-</ul>
-</li>
-<li><strong>01：10</strong>：××在荒野中醒来，<font  color="red">为了像我们一样被欺骗被隐瞒</font>，而踏入了这个世界</li>
-</ul>
-</li>
-</ul>
-<h2 id="依米yoriko"><a href="#依米yoriko" class="headerlink" title="依米yoriko"></a>依米yoriko</h2><h4 id="未命名动态1"><a href="#未命名动态1" class="headerlink" title="未命名动态1"></a>未命名动态1</h4><ul>
-<li><strong>发布日期</strong>：2023-01-02</li>
-<li><strong>动态内容</strong>：<br>​	距离那个真相被揭开 还遥遥无期<br>​​	但我至少已经迎来了新的开始</li>
-</ul>
-<p>​	嘘 我将只字不提<br>​	先埋葬曾经的我 再掩盖新的迷题<br>​	直到所有人都开始疑惑<br>​	但那时 我早已在小屋的黑暗角落里隐匿<br>​	至此，我感谢所有支持过我的人，所有帮助过我的人，伤害过我的人<br>​	如果这是另一个不能被探测的开始<br>​	那就任其发展<br>​	我们都会好好活下去 迎接未来 对吗</p>
-<h4 id="谈话-2019-11-17-21-54-mp3"><a href="#谈话-2019-11-17-21-54-mp3" class="headerlink" title="谈话_2019-11-17-21-54_mp3"></a>谈话_2019-11-17-21-54_mp3</h4><ul>
-<li><strong>发布日期</strong>：2024-03-12</li>
-<li><strong>视频内容</strong>：<ul>
-<li><strong>音频</strong>：我本来以为都丢了，但还是在一个…就是逃生插件的一个文件夹里面找到了它。那个插件其实还挺好用的，能显示空气墙所有的就是碰撞体积啊，用线条显示出来。这里面是我在某天留下来的一个记录，为什么用英文呢？大概还是不想被别人发现吧。这个文件写于和那个女孩Ryter认识之后的某个时间。她让我去我们童年的一个场所里头，找到一个很重要的东西，但现在已经无所谓了。那就是一块U盘，里面存放了所有W.T.写下来的东西。W.T.？哦，是Ryter那家伙的简称，因为Ryter听起来像是writer，作家，她也确实像一个作家一样。她是我见过画画最好的女孩，她也画了很多东西。我跟她童年的时候就认识吗？不是，我认识她的时候，她满身都是血。她躺倒在自己的床边上，似乎就刚想爬起来，但是又摔了个狗啃泥。而那个时候她就在…（尬笑）我的房间里。但不是我房间里的床，而是一个“洞”。对，一个挺小的，人钻不进去的洞，她在洞的里面。啊？不是不是，（大笑）她不是什么凿穿了墙壁的那种什么韩国恐怖电影那种变态邻居。我的邻居是一个用来发这个网购这个货的那个货仓，就每天下午会有个人快递员上门就是来取货发货，一般两个小时左右吧。发货的人来了，快递员会来，拿着个大兜子。除了这件事之外就是我那个邻居就不会有人在。最重要的是隔壁的那个租户是个、是个大妈。绝对不是长头发的小姑娘，这我还能看错了不成，是不是？Ryter是挺漂亮的，但不是我的菜。我那时候跟家里人吵架了，所有自己就想又租了个特别小的房子，然后一边上课一边兼职上班，还有干我想干的事。嗬，好吧，你也没听懂，有点乱了。啊？啊，我不抽烟，我不抽烟，谢谢你。其实你可以理解为她处于一个很奇怪的空间里，就是她在最初的时候，她是个性格非常恶劣的家伙。我甚至一度认为我玩的是不是把传送门玩魔怔了 ，但，不是，真的不是。反正，在最初的最初，就是那个洞口老是有一阵一阵的小风往外吹，往我屋子里吹，而不是往外吹，是往我屋子里吹，很小，就是几乎感受不到，反正挺吓人的。但是这就是这就是所有的事怎么开始的。哎呀，你要是想知道这个、这个破文件是怎么回事啊，就得听我慢慢跟你说了。</li>
-</ul>
-</li>
-</ul>
-<h4 id="未命名动态2"><a href="#未命名动态2" class="headerlink" title="未命名动态2"></a>未命名动态2</h4><ul>
-<li><strong>发布日期</strong>：2024-05-12</li>
-<li><strong>动态内容</strong>：<ul>
-<li><strong>文本</strong>：……、</li>
-<li><strong>图片</strong>：![[images&#x2F;3f934c4c44b1de8fad72f307b60f37ce7763148.png@1052w_!web-dynamic.webp]]</li>
-</ul>
-</li>
-</ul>
-<h4 id="未命名动态3"><a href="#未命名动态3" class="headerlink" title="未命名动态3"></a>未命名动态3</h4><ul>
-<li><strong>发布日期</strong>：2024-07-26</li>
-<li><strong>动态内容</strong>：<ul>
-<li><strong>文本</strong>：有意思。</li>
-<li><strong>图片</strong>：![[images&#x2F;<a href="mailto:&#x38;&#x61;&#x65;&#x64;&#x32;&#x38;&#102;&#x39;&#48;&#x31;&#53;&#48;&#x66;&#x36;&#x35;&#x63;&#x33;&#56;&#99;&#55;&#97;&#x31;&#101;&#52;&#50;&#97;&#x31;&#x30;&#x30;&#x65;&#54;&#101;&#55;&#x37;&#54;&#x33;&#49;&#x34;&#56;&#x2e;&#x70;&#x6e;&#103;&#64;&#49;&#49;&#x39;&#x32;&#119;&#x5f;&#54;&#x37;&#48;&#x68;&#x2e;&#x77;&#101;&#98;&#x70;">8aed28f90150f65c38c7a1e42a100e6e7763148.png@1192w_670h.webp</a>]]</li>
-</ul>
-</li>
-</ul>
-<h4 id="谈话-2019-11-30-04-33-mp3"><a href="#谈话-2019-11-30-04-33-mp3" class="headerlink" title="谈话_2019-11-30-04-33_mp3"></a>谈话_2019-11-30-04-33_mp3</h4><ul>
-<li><strong>发布日期</strong>：2024-09-27</li>
-<li><strong>视频内容</strong>：<ul>
-<li>音频：哈哈，你真的成功了呀，ryter 。你不会喜欢这种囚禁play吧？毕竟，你跟这个洞里头——诶哈哈，没有没有，我开玩笑的。不过他也真挺顽强的呀。毕竟他一旦想说这种相关的内容，他的大脑里就会像被针刺了一样。那种疼痛和低语简直不是人能受得了的。嘿，还是你最地狱。什么，我幸灾乐祸？哎，这不是咱们两个要一起做的事嘛。你看，如果我们的笼牢不设置点限制——那他们不是想跑就能跑了嘛。最初的那俩就是个例子。尤其是那个男的，狡诈的很。（怀疑指向untitled world中的yeha与disctop）嗯——有意思。唉，你就感谢我是个孤独的人吧。如果我特别爱社交啊，我肯定有朋友送礼物这之类的，过生日嘛，也就是唱唱KTV，玩玩密室逃脱，额——吃个饭之类的，可惜，我就没啥朋友。不过某种意义上来说，咱们俩这，也算是密室。哎，你又要睡会儿了，你又嫌我话多了。啧，哎呀，不过我今年也发视频，我想的是至少每年过生日都得更新一期吧，今年可是我最喜欢的游戏——逃生！哎哎，你别真睡啊！不是，我哪儿话痨了？喂！你这么能睡真的很像那个，诶，那个Malfurion，你知道魔兽吗？就，那个游戏里有个暗夜精灵德鲁伊，他也特别能睡，一睡睡好几百年那种，但其实呢，在燃烧军团入侵艾泽拉斯的时候，还是他的妻子 Tyrande……<br/>（此处故事出自魔兽世界“上古之战“）</li>
-</ul>
-</li>
-</ul>
-<h4 id="这是结局吗？"><a href="#这是结局吗？" class="headerlink" title="这是结局吗？"></a>这是结局吗？</h4><ul>
-<li>发布日期：2025-01-20</li>
-<li>动态内容：<ul>
-<li>文本：感觉大家最近都在摸这个鱼，<br/>不过嘛……这是开玩笑的，一切还远没有结束。</li>
-<li>图片：![[images&#x2F;<a href="mailto:&#97;&#x30;&#57;&#53;&#51;&#49;&#51;&#50;&#x63;&#x61;&#50;&#54;&#x61;&#x31;&#x66;&#x39;&#x63;&#97;&#x32;&#x32;&#97;&#x34;&#x31;&#x32;&#x31;&#x64;&#53;&#x39;&#97;&#x63;&#x35;&#x63;&#55;&#x37;&#x36;&#51;&#x31;&#x34;&#56;&#46;&#x70;&#110;&#103;&#x40;&#x31;&#x30;&#x34;&#52;&#x77;&#x5f;&#49;&#48;&#x34;&#52;&#x68;&#x2e;&#119;&#101;&#98;&#x70;">a0953132ca26a1f9ca22a4121d59ac5c7763148.png@1044w_1044h.webp</a>]]</li>
-</ul>
-</li>
-</ul>
-<h4 id="唉……"><a href="#唉……" class="headerlink" title="唉……"></a>唉……</h4><ul>
-<li>发布日期：2025-02-20</li>
-<li>动态内容：<ul>
-<li>文本：为什么她一直在尝试修改那些备用数据呢？<br/>如果她也想要拥有一个属于自己的□□……。<br/>大可不必这样。<br/>KEEP ON TRYING, THEN KEEP ON DYING.</li>
-</ul>
-</li>
-</ul>
-<h2 id="黛丝可托普"><a href="#黛丝可托普" class="headerlink" title="黛丝可托普"></a>黛丝可托普</h2>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2025/11/22/heya%E7%9A%84%E4%B8%87%E4%BA%8B%E5%B1%8BARG/" data-id="cuidgHHciBhgg6kUvLZ5YGHUz" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2025/11/22/hello-world/" class="article-date">
-  <time class="dt-published" datetime="2025-11-22T06:46:56.765Z" itemprop="datePublished">2025-11-22</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/11/22/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2025/11/22/hello-world/" data-id="cuidyVbaZ5-xc4jcqXLPWiDZk" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-
-  
-    
-
-  
-    
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/11/">November 2025</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2025/11/22/heya%E7%9A%84%E4%B8%87%E4%BA%8B%E5%B1%8BARG/">(no title)</a>
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
           </li>
+          
         
-          <li>
-            <a href="/2025/11/22/hello-world/">Hello World</a>
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
           </li>
         
       </ul>
     </div>
   </div>
+</nav>
 
   
-</aside>
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="An elegant Material-Design theme for Hexo"></span>
+          
+        </div>
+
         
       </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
+
       
-      &copy; 2025 John Doe<br>
-      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
     </div>
   </div>
-</footer>
+</div>
 
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          style="margin-top: 0">
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2025/11/22/heya%E7%9A%84%E4%B8%87%E4%BA%8B%E5%B1%8BARG/" target="_self">
+          
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/11/22/heya%E7%9A%84%E4%B8%87%E4%BA%8B%E5%B1%8BARG/" target="_self">
+        <div>
+          [!quote] 目前已知社交平台账号bilibili：  @heya的万事屋(uid20466996) @黛丝可托普(uid481575858) @依米yoriko(uid7763148)  &#x2F;&#x2F;heya的原b站号    steam：  不停赶工H大爷 天选社畜D某人    网易云音乐：  YKO_O    网易LOFTER：  CHILI FLOWER   heya的万事
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-11-22 15:04" pubdate>
+              2025-11-22
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2025/11/22/hello-world/" target="_self">
+          Hello World
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/11/22/hello-world/" target="_self">
+        <div>
+          Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-11-22 14:46" pubdate>
+              2025-11-22
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     
 
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
 
-<script src="/js/jquery-3.6.4.min.js"></script>
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
 
 
 
   
-<script src="/fancybox/jquery.fancybox.min.js"></script>
+    <script  src="/js/img-lazyload.js" ></script>
+  
 
 
 
 
-<script src="/js/script.js"></script>
+  <script  src="/js/local-search.js" ></script>
 
 
 
 
 
-  </div>
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
 </body>
 </html>
