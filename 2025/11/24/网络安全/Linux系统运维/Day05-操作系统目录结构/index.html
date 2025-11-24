@@ -1,0 +1,377 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Day05-操作系统目录结构 | Mandarava23</title><meta name="author" content="Mandarava23"><meta name="copyright" content="Mandarava23"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="0. 文件编辑时退出原因vim编辑流程：  从硬盘区域读取目标文件 将其调取到内存区域 创建一个目标文件的临时文件（.swp后缀） 进行编辑操作 :wq!后将临时文件覆盖原文件 将文件重新存回硬盘区域 [!note]文件在磁盘区域与内存区域之间转移的操作称为 IO操作    1. 文件编辑命令扩展1.1 echoecho多出现于命令文本中，作为代码作用 1.2 cat 查看文件内容：cat 目标文">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Day05-操作系统目录结构">
+<meta property="og:url" content="https://mandarava23-code.github.io/2025/11/24/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/Linux%E7%B3%BB%E7%BB%9F%E8%BF%90%E7%BB%B4/Day05-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84/index.html">
+<meta property="og:site_name" content="Mandarava23">
+<meta property="og:description" content="0. 文件编辑时退出原因vim编辑流程：  从硬盘区域读取目标文件 将其调取到内存区域 创建一个目标文件的临时文件（.swp后缀） 进行编辑操作 :wq!后将临时文件覆盖原文件 将文件重新存回硬盘区域 [!note]文件在磁盘区域与内存区域之间转移的操作称为 IO操作    1. 文件编辑命令扩展1.1 echoecho多出现于命令文本中，作为代码作用 1.2 cat 查看文件内容：cat 目标文">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mandarava23-code.github.io/uploads/profile%20photo.jpg">
+<meta property="article:published_time" content="2025-11-24T09:33:31.000Z">
+<meta property="article:modified_time" content="2025-11-24T09:38:51.385Z">
+<meta property="article:author" content="Mandarava23">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mandarava23-code.github.io/uploads/profile%20photo.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Day05-操作系统目录结构",
+  "url": "https://mandarava23-code.github.io/2025/11/24/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/Linux%E7%B3%BB%E7%BB%9F%E8%BF%90%E7%BB%B4/Day05-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84/",
+  "image": "https://mandarava23-code.github.io/uploads/profile%20photo.jpg",
+  "datePublished": "2025-11-24T09:33:31.000Z",
+  "dateModified": "2025-11-24T09:38:51.385Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Mandarava23",
+      "url": "https://mandarava23-code.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://mandarava23-code.github.io/2025/11/24/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/Linux%E7%B3%BB%E7%BB%9F%E8%BF%90%E7%BB%B4/Day05-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.clarity.ms"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>(function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+})(window, document, "clarity", "script", "ub0o80q0hc");
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'medium_zoom',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Day05-操作系统目录结构',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.1.1"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      if ($loadingBox.classList.contains('loaded')) return
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+
+  if (document.readyState === 'complete') {
+    preloader.endLoading()
+  } else {
+    window.addEventListener('load', preloader.endLoading)
+    document.addEventListener('DOMContentLoaded', preloader.endLoading)
+    // Add timeout protection: force end after 7 seconds
+    setTimeout(preloader.endLoading, 7000)
+  }
+
+  if (false) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="web_bg" style="background-image: url(/uploads/background.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/uploads/profile%20photo.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">10</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/message-board/"><i class="fa-fw fas fa-fw fas fa-comment-dots"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/uploads/top_img.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/uploads/profile%20photo.jpg" alt="Logo"><span class="site-name">Mandarava23</span></a><a class="nav-page-title" href="/"><span class="site-name">Day05-操作系统目录结构</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/message-board/"><i class="fa-fw fas fa-fw fas fa-comment-dots"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Day05-操作系统目录结构</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-11-24T09:33:31.000Z" title="发表于 2025-11-24 17:33:31">2025-11-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-11-24T09:38:51.385Z" title="更新于 2025-11-24 17:38:51">2025-11-24</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Linux%E7%B3%BB%E7%BB%9F%E8%BF%90%E7%BB%B4/">Linux系统运维</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Linux%E7%B3%BB%E7%BB%9F%E8%BF%90%E7%BB%B4/Day05/">Day05</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">1.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>5分钟</span></span><span class="post-meta-separator">|</span><span id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span class="waline-pageview-count" data-path="/2025/11/24/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/Linux%E7%B3%BB%E7%BB%9F%E8%BF%90%E7%BB%B4/Day05-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84/"><i class="fa-solid fa-spinner fa-spin"></i></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2025/11/24/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/Linux%E7%B3%BB%E7%BB%9F%E8%BF%90%E7%BB%B4/Day05-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84/#post-comment"><span class="waline-comment-count" data-path="/2025/11/24/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/Linux%E7%B3%BB%E7%BB%9F%E8%BF%90%E7%BB%B4/Day05-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84/"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h3 id="0-文件编辑时退出"><a href="#0-文件编辑时退出" class="headerlink" title="0. 文件编辑时退出"></a>0. 文件编辑时退出</h3><h4 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h4><p>vim编辑流程：</p>
+<ol>
+<li>从硬盘区域读取目标文件</li>
+<li>将其调取到内存区域</li>
+<li>创建一个目标文件的临时文件（.swp后缀）</li>
+<li>进行编辑操作</li>
+<li><code>:wq!</code>后将临时文件覆盖原文件</li>
+<li>将文件重新存回硬盘区域<blockquote>
+<p>[!note]<br>文件在<mark style="background: #FF5582A6;">磁盘区域与内存区域</mark>之间转移的操作称为 <strong>IO操作</strong></p>
+</blockquote>
+</li>
+</ol>
+<h3 id="1-文件编辑命令扩展"><a href="#1-文件编辑命令扩展" class="headerlink" title="1. 文件编辑命令扩展"></a>1. 文件编辑命令扩展</h3><h4 id="1-1-echo"><a href="#1-1-echo" class="headerlink" title="1.1 echo"></a>1.1 echo</h4><p>echo多出现于命令文本中，作为代码作用</p>
+<h4 id="1-2-cat"><a href="#1-2-cat" class="headerlink" title="1.2 cat"></a>1.2 cat</h4><ul>
+<li>查看文件内容：<code>cat 目标文件</code></li>
+<li><strong>非交互式</strong>编辑或追加内容到文件尾部：<br>​	<code>cat &gt;&gt;目标文件&lt;&lt;EOF（任意字符）</code><br>​	&lt;&lt;：标准输入符<br>​	EOF：开始标识符，文本输入时作为结束符</li>
+</ul>
+<h3 id="2-文件查看命令信息扩展"><a href="#2-文件查看命令信息扩展" class="headerlink" title="2. 文件查看命令信息扩展"></a>2. 文件查看命令信息扩展</h3><ul>
+<li>more&#x2F;less：表示一行一行&#x2F;一页一页地查看</li>
+<li>head：查看文件的前几行（默认前10行）<ul>
+<li><code>head -n</code> 查看文件前n行</li>
+</ul>
+</li>
+<li>tail：查看文件的后几行（默认后10行）<ul>
+<li><code>tail -n</code> 查看文件后n行</li>
+<li><code>tail -f/tailf/tail -F</code> <strong>追踪文件信息的变化</strong></li>
+</ul>
+</li>
+</ul>
+<h3 id="3-系统目录结构介绍"><a href="#3-系统目录结构介绍" class="headerlink" title="3. 系统目录结构介绍"></a>3. 系统目录结构介绍</h3><h4 id="3-1-系统目录结构对比"><a href="#3-1-系统目录结构对比" class="headerlink" title="3.1 系统目录结构对比"></a>3.1 系统目录结构对比</h4><ul>
+<li>windows目录形式：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">​c:\windows\system</span><br></pre></td></tr></table></figure>
+<p>路径分隔符是”\“，D、E等盘的目录结构类似</p>
+<ul>
+<li>Linux目录形式：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 绝对路径方式</span><br><span class="line">/etc/hosts</span><br><span class="line"></span><br><span class="line"># 相对路径方式</span><br><span class="line">hosts</span><br><span class="line">./host         $$./表示当前路径</span><br><span class="line">../../host     $$../表示上一级所在的目录</span><br></pre></td></tr></table></figure>
+<p>路径分隔符是”&#x2F;“，<mark style="background: #FF5582A6;">Linux系统的一切目录都是从”&#x2F;“根开始的</mark></p>
+<h4 id="3-2-系统目录作用简述"><a href="#3-2-系统目录作用简述" class="headerlink" title="3.2 系统目录作用简述"></a>3.2 系统目录作用简述</h4><ul>
+<li><strong>&#x2F;root</strong>：表示root用户的家目录</li>
+<li><strong>&#x2F;home</strong>：表示普通用户的家目录</li>
+<li><strong>&#x2F;etc</strong>：服务程序配置文件存储路径 &#x2F;&#x2F;某些服务的配置文件在其子目录中</li>
+<li><strong>&#x2F;boot</strong>：系统运行启动文件存储路径（引导系统启动目录）</li>
+<li><strong>&#x2F;tmp</strong>：系统中临时存储数据信息目录（类似于回收站）</li>
+<li><strong>&#x2F;var</strong>：此目录中数据文件信息会经常变化（存储日志文件）</li>
+<li><strong>&#x2F;opt</strong>：类似于Windows系统中Program Files文件夹，安装第三方软件程序</li>
+<li><strong>&#x2F;usr</strong>：类似于Windows系统中Program Files文件夹，安装第三方软件程序</li>
+<li><strong>&#x2F;dev</strong>：用于存储硬件信息文件目录<ul>
+<li>&#x2F;dev&#x2F;sdb s硬盘接口 d磁盘 b字母排序</li>
+</ul>
+</li>
+<li><strong>&#x2F;bin</strong>：用于存储二进制文件目录（存储命令文件）[binary]</li>
+<li><strong>&#x2F;sbin</strong>：用于存储二进制文件目录（存储管理员可以操作的命令文件）</li>
+<li><strong>&#x2F;lib</strong>：用于存储库文件目录</li>
+<li><strong>&#x2F;lib64</strong>：用于存储库文件目录 &#x2F;&#x2F;库文件：可被直接调用的集成好的功能代码</li>
+<li><strong>&#x2F;proc</strong>：用于存储硬件配置信息或者内核配置信息（存储在内存空间）</li>
+<li><strong>&#x2F;mnt</strong>：实现存储设备挂载操作的目录（临时挂载点）</li>
+<li><strong>&#x2F;media</strong>：实现存储设备挂载操作的目录</li>
+</ul>
+<h4 id="3-3-系统存储设备挂载概念"><a href="#3-3-系统存储设备挂载概念" class="headerlink" title="3.3 系统存储设备挂载概念"></a>3.3 系统存储设备挂载概念</h4><p>windows系统磁盘应用方法：<br>硬件插入 – 分区操作 – 格式化操作 – <mark style="background: #FF5582A6;">分配盘符</mark></p>
+<p>Linux系统磁盘应用方法：<br>硬件插入 – 分区操作 – 格式化操作 – <mark style="background: #FF5582A6;">挂载操作</mark></p>
+<ul>
+<li>挂载操作：给存储设备挂载一个空目录（磁盘与目录建立对应关系）</li>
+<li>挂载操作实现：<ul>
+<li><ol>
+<li>将光盘放入光驱中</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>进行挂载操作 <code>mount 存储设备(/dev) 目标目录</code> 取消挂载 <code>umount 目标目录</code></li>
+</ol>
+</li>
+</ul>
+</li>
+<li>一个目录只能挂载一个存储设备</li>
+</ul>
+<h3 id="4-系统重要文件说明"><a href="#4-系统重要文件说明" class="headerlink" title="4. 系统重要文件说明"></a>4. 系统重要文件说明</h3><h4 id="4-1-网卡配置文件"><a href="#4-1-网卡配置文件" class="headerlink" title="4.1 网卡配置文件"></a>4.1 网卡配置文件</h4><p>&#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33(ifcfg-en​t0)</p>
+<ul>
+<li>网卡文件内容分析：<br>TYPE&#x3D;Ethernet​​	​	– 指定网络通讯类型 以太网-Ethernet<br>BOOTPROTO&#x3D;none​​	​	– 网卡地址获取方式：①DHCP：动态主机配置协议：②none&#x2F;static：人为手动配置网卡地址信息<br>DEFROUTE&#x3D;yes​	​	– 影响主机访问外网<br>NAME&#x3D;ens33​	​	– 定义网卡名称信息<br>DEVICE&#x3D;ens33​	​	– 定义网卡名称信息<br>UUID&#x3D;11bdb6db-0b5d-4483-8cf7-abbd308eb420​	​	– 硬件标识信息<br>ONBOOT&#x3D;yes​	​	– 设置网卡是否开机自动启动<br>IPADDR&#x3D;10.0.0.100​	​	– 网卡地址信息<br>PREFIX&#x3D;24​	​	– 网卡掩码信息<br>GATEWAY&#x3D;10.0.0.254​	​	– 网卡网关信息<br>DNS1&#x3D;223.5.5.5​	​	– 网卡DNS配置</li>
+</ul>
+<blockquote>
+<p>[!note]<br>记得重启网络服务使更改生效</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;systemctl restart network</span><br><span class="line">&gt;或者</span><br><span class="line">&gt;service network restart</span><br></pre></td></tr></table></figure>
+<p>重启单块网卡详见[[Day03-操作系统基础命令]]</p>
+</blockquote>
+<h4 id="4-2-扩展知识：修改网卡名称"><a href="#4-2-扩展知识：修改网卡名称" class="headerlink" title="4.2 扩展知识：修改网卡名称"></a>4.2 扩展知识：修改网卡名称</h4><p>方法一：安装系统时，修改网卡名称<br><code>net.ifnames=0 biosdevname=0</code> – 添加改名配置信息</p>
+<p>方法二：系统安装后​修改网卡名称</p>
+<ol>
+<li>修改配置文件中的网卡名称<ol>
+<li>cd &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;</li>
+<li>vim ifcfg-网卡名称</li>
+<li>改<strong>NAME&#x3D;<strong>和</strong>DEVICE&#x3D;</strong></li>
+</ol>
+</li>
+<li>修改网卡文件名称<ol>
+<li>mv 原网卡文件名称 修改后网卡文件名称</li>
+</ol>
+</li>
+<li>修改系统加载配置文件<ol>
+<li>vim &#x2F;etc&#x2F;default&#x2F;grub</li>
+<li>在6gg后添加<code>net.ifnames=0 biosdevname=0</code></li>
+</ol>
+</li>
+<li>重新加载grub文件配置信息<ol>
+<li>grub2-mkconfig -o &#x2F;boot&#x2F;grub2&#x2F;grub.cfg</li>
+</ol>
+</li>
+<li>重启系统<ol>
+<li>reboot</li>
+</ol>
+</li>
+</ol>
+<h4 id="4-3-域名服务配置文件"><a href="#4-3-域名服务配置文件" class="headerlink" title="4.3 域名服务配置文件"></a>4.3 域名服务配置文件</h4><p>&#x2F;etc&#x2F;resolv.conf</p>
+<p><strong>作用</strong>：会随着网卡配置信息改变，故多用于检测网卡的DNS设置是否正确</p>
+<h4 id="4-4-主机域名解析配置文件"><a href="#4-4-主机域名解析配置文件" class="headerlink" title="4.4 主机域名解析配置文件"></a>4.4 主机域名解析配置文件</h4><p>&#x2F;etc&#x2F;hosts</p>
+<p><strong>作用</strong>：可以实现名称和IP地址之间建立合理的对应关系，从而便于访问指定主机地址</p>
+<ul>
+<li>学习中hosts文件可以作为攻击目标<br>C:\Windows\System32\drivers\etc\hosts</li>
+</ul>
+<blockquote>
+<p>[!danger] 中间人攻击<br>云主机 – 利用爬虫搭建京东相同的网站环境证书 – 下单支付 – 后端银行卡</p>
+</blockquote>
+<p>因此出现了<em><strong>HTTPS安全访问机制</strong></em></p>
+<h4 id="4-5-主机名称配置文件"><a href="#4-5-主机名称配置文件" class="headerlink" title="4.5 主机名称配置文件"></a>4.5 主机名称配置文件</h4><p>vim &#x2F;etc&#x2F;hostname – 永久更改主机名称（需重启系统生效）<br>hostname – 临时修改主机名称（立即生效）</p>
+<p>hostnamectl set-hostname – 永久更改且立即生效</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://mandarava23-code.github.io">Mandarava23</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://mandarava23-code.github.io/2025/11/24/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/Linux%E7%B3%BB%E7%BB%9F%E8%BF%90%E7%BB%B4/Day05-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84/">https://mandarava23-code.github.io/2025/11/24/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/Linux%E7%B3%BB%E7%BB%9F%E8%BF%90%E7%BB%B4/Day05-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://mandarava23-code.github.io" target="_blank">Mandarava23</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/uploads/profile%20photo.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2025/11/24/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/Linux%E7%B3%BB%E7%BB%9F%E8%BF%90%E7%BB%B4/Day06-%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF%E4%BB%8B%E7%BB%8D/" title="Day06-系统信息介绍"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">Day06-系统信息介绍</div></div><div class="info-2"><div class="info-item-1">1.系统重要文件信息1.1 配置系统环境变量有关的配置文件 变量：经常变化的数据信息 设置：abc&#x3D;123 调用：echo $abc 作用：出现在代码&#x2F;脚本文件中，为了更好地调整变化的信息  环境变量的定义：系统中已经设置好的变量，可以满足系统特殊功能​需求env命令可以查看系统的所有环境变量 常见环境变量：  $LANG – 语言 $PS1 – 提示符格式 $PATH – 可执行命令存放路径  cd - 的 - 本质上就是调用了环境变量**$OLDPWD** 环境变量与普通变量的不同：  环境变量都是有特殊功能需求的 环境变量都是默认设置的 环境变量设置对所有用户均生效 环境变量设置名称一般为大写  &#x2F;&#x2F;windows中的环境变量也是这个功能，作用于cmd的命令 1.2 系统别名功能设置 格式：alias 别名=&#39;命令&#39; 作用：简化命令操作 单alias命令可以查看已经设置好的别名 &#x2F;&#x2F;系统会设置有默认的别名信息   [!note]man 命令 可以查看命令信息-i 提示操作   unalias 别名 ...</div></div></div></a><a class="pagination-related" href="/2025/11/24/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/Linux%E7%B3%BB%E7%BB%9F%E8%BF%90%E7%BB%B4/Day04-%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4%E5%BA%94%E7%94%A8/" title="Day04-系统基础命令应用"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">Day04-系统基础命令应用</div></div><div class="info-2"><div class="info-item-1">1. 系统文件操作相关命令 创建文件信息：touch 目标路径 查看确认文件：ls 目标文件路径 编写文件信息：echo &quot;文本内容&quot;&gt;/&gt;&gt; 目标文件路径 &gt;：标准输出重定向符号 会将原有文件内容先清空，再把尖括号左边产生的信息重定向到指定文件中 &gt;&gt;：标准输出追加重定向符号 会在原有文件内容下另起一行，追加新的内容 编写文件内容有多种方式，专业编辑方法为vim&#x2F;vi命令，见后文   其它命令见目录操作命令  2. 系统基本编辑命令yum install -y vim &#x2F;&#x2F;-y代表免交互执行命令vim分为三种模式：普通模式、编辑模式、命令模式  普通模式：查看文件信息 编辑模式：可以编辑修改信息 命令模式：可以做特殊编写&#x2F;功能操作  编辑内容：普通模式 -i-&gt; 编辑模式 -Esx-&gt; 普通模式 -:-&gt; 命令模式   3. 编辑命令常用快捷键​   序号 快捷方式&#x2F;命令 说明     普通模式：移动光标的操作    01 G 将光标移动到文件的最后一行 ...</div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/uploads/profile%20photo.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Mandarava23</div><div class="author-info-description">初学者Re手,学习永无止境</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">10</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Mandarava23-code"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/Mandarava23-code" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#0-%E6%96%87%E4%BB%B6%E7%BC%96%E8%BE%91%E6%97%B6%E9%80%80%E5%87%BA"><span class="toc-number">1.</span> <span class="toc-text">0. 文件编辑时退出</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8E%9F%E5%9B%A0"><span class="toc-number">1.1.</span> <span class="toc-text">原因</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%96%87%E4%BB%B6%E7%BC%96%E8%BE%91%E5%91%BD%E4%BB%A4%E6%89%A9%E5%B1%95"><span class="toc-number">2.</span> <span class="toc-text">1. 文件编辑命令扩展</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-echo"><span class="toc-number">2.1.</span> <span class="toc-text">1.1 echo</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-cat"><span class="toc-number">2.2.</span> <span class="toc-text">1.2 cat</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%96%87%E4%BB%B6%E6%9F%A5%E7%9C%8B%E5%91%BD%E4%BB%A4%E4%BF%A1%E6%81%AF%E6%89%A9%E5%B1%95"><span class="toc-number">3.</span> <span class="toc-text">2. 文件查看命令信息扩展</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%B3%BB%E7%BB%9F%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84%E4%BB%8B%E7%BB%8D"><span class="toc-number">4.</span> <span class="toc-text">3. 系统目录结构介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-%E7%B3%BB%E7%BB%9F%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84%E5%AF%B9%E6%AF%94"><span class="toc-number">4.1.</span> <span class="toc-text">3.1 系统目录结构对比</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-%E7%B3%BB%E7%BB%9F%E7%9B%AE%E5%BD%95%E4%BD%9C%E7%94%A8%E7%AE%80%E8%BF%B0"><span class="toc-number">4.2.</span> <span class="toc-text">3.2 系统目录作用简述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-%E7%B3%BB%E7%BB%9F%E5%AD%98%E5%82%A8%E8%AE%BE%E5%A4%87%E6%8C%82%E8%BD%BD%E6%A6%82%E5%BF%B5"><span class="toc-number">4.3.</span> <span class="toc-text">3.3 系统存储设备挂载概念</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E7%B3%BB%E7%BB%9F%E9%87%8D%E8%A6%81%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E"><span class="toc-number">5.</span> <span class="toc-text">4. 系统重要文件说明</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-%E7%BD%91%E5%8D%A1%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">5.1.</span> <span class="toc-text">4.1 网卡配置文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-%E6%89%A9%E5%B1%95%E7%9F%A5%E8%AF%86%EF%BC%9A%E4%BF%AE%E6%94%B9%E7%BD%91%E5%8D%A1%E5%90%8D%E7%A7%B0"><span class="toc-number">5.2.</span> <span class="toc-text">4.2 扩展知识：修改网卡名称</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-3-%E5%9F%9F%E5%90%8D%E6%9C%8D%E5%8A%A1%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">5.3.</span> <span class="toc-text">4.3 域名服务配置文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-4-%E4%B8%BB%E6%9C%BA%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">5.4.</span> <span class="toc-text">4.4 主机域名解析配置文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-5-%E4%B8%BB%E6%9C%BA%E5%90%8D%E7%A7%B0%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">5.5.</span> <span class="toc-text">4.5 主机名称配置文件</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/11/24/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/Linux%E7%B3%BB%E7%BB%9F%E8%BF%90%E7%BB%B4/Day06-%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF%E4%BB%8B%E7%BB%8D/" title="Day06-系统信息介绍">Day06-系统信息介绍</a><time datetime="2025-11-24T09:35:38.000Z" title="发表于 2025-11-24 17:35:38">2025-11-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/11/24/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/Linux%E7%B3%BB%E7%BB%9F%E8%BF%90%E7%BB%B4/Day05-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84/" title="Day05-操作系统目录结构">Day05-操作系统目录结构</a><time datetime="2025-11-24T09:33:31.000Z" title="发表于 2025-11-24 17:33:31">2025-11-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/11/24/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/Linux%E7%B3%BB%E7%BB%9F%E8%BF%90%E7%BB%B4/Day04-%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4%E5%BA%94%E7%94%A8/" title="Day04-系统基础命令应用">Day04-系统基础命令应用</a><time datetime="2025-11-24T09:33:17.000Z" title="发表于 2025-11-24 17:33:17">2025-11-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/11/24/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/Linux%E7%B3%BB%E7%BB%9F%E8%BF%90%E7%BB%B4/Day03-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/" title="Day03-操作系统基础命令">Day03-操作系统基础命令</a><time datetime="2025-11-24T09:06:10.000Z" title="发表于 2025-11-24 17:06:10">2025-11-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/11/24/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/Linux%E7%B3%BB%E7%BB%9F%E8%BF%90%E7%BB%B4/Day02-%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE/" title="Day02-系统基础网络配置">Day02-系统基础网络配置</a><time datetime="2025-11-24T09:05:55.000Z" title="发表于 2025-11-24 17:05:55">2025-11-24</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 By Mandarava23</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.2</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.2"></script><script src="/js/main.js?v=5.5.2"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js"></script><div class="js-pjax"><script>(() => {
+  let initFn = window.walineFn || null
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const destroyWaline = ele => ele.destroy()
+
+  const initWaline = (Fn, el = document, path = window.location.pathname) => {
+    const waline = Fn({
+      el: el.querySelector('#waline-wrap'),
+      serverURL: 'https://blogcomments-six.vercel.app/',
+      pageview: true,
+      dark: 'html[data-theme="dark"]',
+      comment: true,
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || path
+    })
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyWaline = () => {
+        destroyWaline(waline)
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const loadWaline = (el, path) => {
+    if (initFn) initWaline(initFn, el, path)
+    else {
+      btf.getCSS('https://cdn.jsdelivr.net/npm/@waline/client@3.7.1/dist/waline.min.css')
+        .then(() => import('https://cdn.jsdelivr.net/npm/@waline/client@3.7.1/dist/waline.min.js'))
+        .then(({ init }) => {
+          initFn = init || Waline.init
+          initWaline(initFn, el, path)
+          window.walineFn = initFn
+        })
+    }
+  }
+
+  if (isShuoshuo) {
+    'Waline' === 'Waline'
+      ? window.shuoshuoComment = { loadComment: loadWaline } 
+      : window.loadOtherComment = loadWaline
+    return
+  }
+
+  if ('Waline' === 'Waline' || !false) {
+    if (false) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+    else setTimeout(loadWaline, 0)
+  } else {
+    window.loadOtherComment = loadWaline
+  }
+})()</script></div><script async data-pjax src="/"></script></div></body></html>
