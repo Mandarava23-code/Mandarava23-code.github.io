@@ -1,13 +1,13 @@
-<!DOCTYPE html><html lang="[&quot;zh-CN&quot;,&quot;en&quot;,&quot;default&quot;]" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>滴水-反汇编 | Mandarava23</title><meta name="author" content="Mandarava23"><meta name="copyright" content="Mandarava23"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="数据宽度1、定义数学上的数字，是没有大小限制的，可以无限的大。但在计算机中，由于受硬件的制约，数据都是有长度限制的（我们称为数据宽度），超过最多宽度的数据会被丢弃。 2、计算机中常见的数据宽度1）位（BIT）： 0 2）字节（Byte）： 00000000 3）字（Word）： 0000000000000000 4）双字（Doubleword）:00000000000000000000000000">
+<!DOCTYPE html><html lang="[&quot;zh-CN&quot;,&quot;en&quot;,&quot;default&quot;]" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>滴水-反汇编 | Mandarava23</title><meta name="author" content="Mandarava23"><meta name="copyright" content="Mandarava23"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="数据宽度1、定义数学上的数字，是没有大小限制的，可以无限的大。但在计算机中，由于受硬件的制约，数据都是有长度限制的（我们称为数据宽度），超过最多宽度的数据会被丢弃。 2、计算机中常见的数据宽度1）位（BIT）： 0 &#x2F;&#x2F;1 2）字节（Byte）： 00000000 &#x2F;&#x2F;8 3）字（Word）： 0000000000000000 &#x2F;&#x2F;16">
 <meta property="og:type" content="article">
 <meta property="og:title" content="滴水-反汇编">
 <meta property="og:url" content="https://mandarava23-code.github.io/2025/11/24/Reverse/%E6%BB%B4%E6%B0%B4-%E5%8F%8D%E6%B1%87%E7%BC%96/index.html">
 <meta property="og:site_name" content="Mandarava23">
-<meta property="og:description" content="数据宽度1、定义数学上的数字，是没有大小限制的，可以无限的大。但在计算机中，由于受硬件的制约，数据都是有长度限制的（我们称为数据宽度），超过最多宽度的数据会被丢弃。 2、计算机中常见的数据宽度1）位（BIT）： 0 2）字节（Byte）： 00000000 3）字（Word）： 0000000000000000 4）双字（Doubleword）:00000000000000000000000000">
+<meta property="og:description" content="数据宽度1、定义数学上的数字，是没有大小限制的，可以无限的大。但在计算机中，由于受硬件的制约，数据都是有长度限制的（我们称为数据宽度），超过最多宽度的数据会被丢弃。 2、计算机中常见的数据宽度1）位（BIT）： 0 &#x2F;&#x2F;1 2）字节（Byte）： 00000000 &#x2F;&#x2F;8 3）字（Word）： 0000000000000000 &#x2F;&#x2F;16">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://mandarava23-code.github.io/uploads/profile%20photo.jpg">
 <meta property="article:published_time" content="2025-11-24T08:49:25.000Z">
-<meta property="article:modified_time" content="2025-11-24T08:55:23.825Z">
+<meta property="article:modified_time" content="2025-12-01T08:19:54.164Z">
 <meta property="article:author" content="Mandarava23">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://mandarava23-code.github.io/uploads/profile%20photo.jpg"><script type="application/ld+json">{
@@ -17,7 +17,7 @@
   "url": "https://mandarava23-code.github.io/2025/11/24/Reverse/%E6%BB%B4%E6%B0%B4-%E5%8F%8D%E6%B1%87%E7%BC%96/",
   "image": "https://mandarava23-code.github.io/uploads/profile%20photo.jpg",
   "datePublished": "2025-11-24T08:49:25.000Z",
-  "dateModified": "2025-11-24T08:55:23.825Z",
+  "dateModified": "2025-12-01T08:19:54.164Z",
   "author": [
     {
       "@type": "Person",
@@ -193,11 +193,11 @@
     btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
     btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
   }
-})()</script><div id="web_bg" style="background-image: url(/uploads/%E7%8F%82%E6%9C%B5%E8%8E%89_background.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/uploads/profile%20photo.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">12</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/message-board/"><i class="fa-fw fas fa-fw fas fa-comment-dots"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/uploads/%E6%B5%B7%E8%BE%B9%E5%88%9D%E9%9F%B3_background.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/uploads/profile%20photo.jpg" alt="Logo"><span class="site-name">Mandarava23</span></a><a class="nav-page-title" href="/"><span class="site-name">滴水-反汇编</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/message-board/"><i class="fa-fw fas fa-fw fas fa-comment-dots"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">滴水-反汇编</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-11-24T08:49:25.000Z" title="发表于 2025-11-24 16:49:25">2025-11-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-11-24T08:55:23.825Z" title="更新于 2025-11-24 16:55:23">2025-11-24</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Reverse/">Reverse</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">3.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>15分钟</span></span><span class="post-meta-separator">|</span><span id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span class="waline-pageview-count" data-path="/2025/11/24/Reverse/%E6%BB%B4%E6%B0%B4-%E5%8F%8D%E6%B1%87%E7%BC%96/"><i class="fa-solid fa-spinner fa-spin"></i></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2025/11/24/Reverse/%E6%BB%B4%E6%B0%B4-%E5%8F%8D%E6%B1%87%E7%BC%96/#post-comment"><span class="waline-comment-count" data-path="/2025/11/24/Reverse/%E6%BB%B4%E6%B0%B4-%E5%8F%8D%E6%B1%87%E7%BC%96/"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h2 id="数据宽度"><a href="#数据宽度" class="headerlink" title="数据宽度"></a>数据宽度</h2><h3 id="1、定义"><a href="#1、定义" class="headerlink" title="1、定义"></a>1、定义</h3><p>数学上的数字，是没有大小限制的，可以无限的大。但在计算机中，由于受硬件的制约，数据都是有长度限制的（我们称为数据宽度），<strong>超过最多宽度的数据会被丢弃</strong>。</p>
-<h3 id="2、计算机中常见的数据宽度"><a href="#2、计算机中常见的数据宽度" class="headerlink" title="2、计算机中常见的数据宽度"></a>2、计算机中常见的数据宽度</h3><p>1）位（BIT）： 0</p>
-<p>2）字节（Byte）： 00000000</p>
-<p>3）字（Word）： 0000000000000000</p>
-<p>4）双字（Doubleword）:00000000000000000000000000000000</p>
+})()</script><div id="web_bg" style="background-image: url(/uploads/%E7%8F%82%E6%9C%B5%E8%8E%89_background.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/uploads/profile%20photo.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">12</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/message-board/"><i class="fa-fw fas fa-fw fas fa-comment-dots"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/uploads/%E6%B5%B7%E8%BE%B9%E5%88%9D%E9%9F%B3_background.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/uploads/profile%20photo.jpg" alt="Logo"><span class="site-name">Mandarava23</span></a><a class="nav-page-title" href="/"><span class="site-name">滴水-反汇编</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/message-board/"><i class="fa-fw fas fa-fw fas fa-comment-dots"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">滴水-反汇编</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-11-24T08:49:25.000Z" title="发表于 2025-11-24 16:49:25">2025-11-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-12-01T08:19:54.164Z" title="更新于 2025-12-01 16:19:54">2025-12-01</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Reverse/">Reverse</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">3.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>15分钟</span></span><span class="post-meta-separator">|</span><span id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span class="waline-pageview-count" data-path="/2025/11/24/Reverse/%E6%BB%B4%E6%B0%B4-%E5%8F%8D%E6%B1%87%E7%BC%96/"><i class="fa-solid fa-spinner fa-spin"></i></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2025/11/24/Reverse/%E6%BB%B4%E6%B0%B4-%E5%8F%8D%E6%B1%87%E7%BC%96/#post-comment"><span class="waline-comment-count" data-path="/2025/11/24/Reverse/%E6%BB%B4%E6%B0%B4-%E5%8F%8D%E6%B1%87%E7%BC%96/"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h2 id="数据宽度"><a href="#数据宽度" class="headerlink" title="数据宽度"></a>数据宽度</h2><h3 id="1、定义"><a href="#1、定义" class="headerlink" title="1、定义"></a>1、定义</h3><p>数学上的数字，是没有大小限制的，可以无限的大。但在计算机中，由于受硬件的制约，数据都是有长度限制的（我们称为数据宽度），<strong>超过最多宽度的数据会被丢弃</strong>。</p>
+<h3 id="2、计算机中常见的数据宽度"><a href="#2、计算机中常见的数据宽度" class="headerlink" title="2、计算机中常见的数据宽度"></a>2、计算机中常见的数据宽度</h3><p>1）位（BIT）： 0 &#x2F;&#x2F;1</p>
+<p>2）字节（Byte）： 00000000 &#x2F;&#x2F;8</p>
+<p>3）字（Word）： 0000000000000000 &#x2F;&#x2F;16</p>
+<p>4）双字（Doubleword）:00000000000000000000000000000000 &#x2F;&#x2F;32</p>
 <h3 id="3、存储范围"><a href="#3、存储范围" class="headerlink" title="3、存储范围"></a>3、存储范围</h3><p>字节（Byte）： 0 ~ 0xFF</p>
 <p>字（Word）： 0 ~ 0xFFFF</p>
 <p>双字（Doubleword）： 0 ~ 0xFFFFFFFF</p>
@@ -215,8 +215,7 @@
 </tr>
 </thead>
 </table>
-<p>0x9A</p>
-<p>154</p>
+<p>0x9A<br>154</p>
 <h3 id="2、有符号数的正数编码规则"><a href="#2、有符号数的正数编码规则" class="headerlink" title="2、有符号数的正数编码规则"></a>2、有符号数的正数编码规则</h3><table>
 <thead>
 <tr>
@@ -231,111 +230,51 @@
 </tr>
 </thead>
 </table>
-<p>有符号数的首位为符号位，0为正数，1为负数</p>
-<p>1A</p>
-<p>26</p>
-<h2 id="原码反码补码"><a href="#原码反码补码" class="headerlink" title="原码反码补码"></a>原码反码补码</h2><h3 id="1、有符号数的编码规则"><a href="#1、有符号数的编码规则" class="headerlink" title="1、有符号数的编码规则"></a>1、有符号数的编码规则</h3><p>原码：最高位为符号位，其余各位为数值本身的绝对值</p>
-<p>反码：</p>
-<p>​	正数：反码与原码相同</p>
-<p>​	负数：符号位为1，其余位对原码取反</p>
-<p>补码：</p>
-<p>​	正数：补码与原码相同</p>
-<p>​	复数：符号位为1，其余位对原码取反+1</p>
-<h3 id="2、举例说明"><a href="#2、举例说明" class="headerlink" title="2、举例说明"></a>2、举例说明</h3><p>-1</p>
-<p>​	1 0 0 0 0 0 0 1 原码</p>
-<p>​ 1 1 1 1 1 1 1 0 反码</p>
-<p>​ 1 1 1 1 1 1 1 1 补码 &#x2F;&#x2F;FF</p>
-<p>-7</p>
-<p>​	1 0 0 0 0 1 1 1 原码</p>
-<p>​	1 1 1 1 1 0 0 0 反码</p>
-<p>​ 1 1 1 1 1 0 0 1 补码 &#x2F;&#x2F;F9</p>
-<h3 id="3、总结"><a href="#3、总结" class="headerlink" title="3、总结"></a>3、总结</h3><p>1）正数原（补）码存储</p>
-<p>2）负数补码存储</p>
-<ul>
-<li><strong>假设数据宽度为1 BYTE（8 BIT）</strong></li>
+<p>有符号数的首位为符号位，0为正数，1为负数<br>0x1A<br>26</p>
+<h2 id="原码反码补码"><a href="#原码反码补码" class="headerlink" title="原码反码补码"></a>原码反码补码</h2><h3 id="1、有符号数的编码规则"><a href="#1、有符号数的编码规则" class="headerlink" title="1、有符号数的编码规则"></a>1、有符号数的编码规则</h3><ul>
+<li>原码：最高位为符号位，其余各位为数值本身的绝对值</li>
+<li>反码：<ul>
+<li>​正数：反码与原码相同</li>
+<li>负数：符号位为1，其余位对原码取反</li>
 </ul>
-<p>无符号数：0 1 2 3 …… FF（10进制255）</p>
-<p>有符号数：</p>
-<p>​	正数：0 …… 7F</p>
-<p>​	负数：FF ……80</p>
-<h2 id="计算机运算"><a href="#计算机运算" class="headerlink" title="计算机运算"></a>计算机运算</h2><h3 id="1、与运算"><a href="#1、与运算" class="headerlink" title="1、与运算"></a>1、与运算</h3><p>两个位都为1时，结果才为1</p>
-<p><em>例如</em>：</p>
-<p>​ 1011 0001</p>
-<p><em><strong>and(&amp;)</strong></em> 1101 1000</p>
-<p>-—————————-</p>
-<p>​ 1001 0000</p>
-<h3 id="2、或运算"><a href="#2、或运算" class="headerlink" title="2、或运算"></a>2、或运算</h3><p>只要有一个为1就是1</p>
-<p><em>例如</em>：</p>
-<p>​			1011 0001</p>
-<p><em><strong>or( | )</strong></em>	       1101 1000</p>
-<p>-—————————-</p>
-<p>​ 1111 1001</p>
-<h3 id="3、异或运算"><a href="#3、异或运算" class="headerlink" title="3、异或运算"></a>3、异或运算</h3><p>不一样时为1</p>
-<p><em>例如</em>：</p>
-<p>​			1011 0001</p>
-<p><em><strong>xor(^)</strong></em>	      1101 1000</p>
-<p>-—————————-</p>
-<p>​			0110 1001</p>
-<h3 id="4、非运算"><a href="#4、非运算" class="headerlink" title="4、非运算"></a>4、非运算</h3><p>0就是1 1就是0</p>
-<p><em>例如</em>：</p>
-<p><em><strong>not(~)</strong></em> 1101 1000</p>
-<p>-—————————-</p>
-<p>​			0010 0111</p>
-<h3 id="5、左移"><a href="#5、左移" class="headerlink" title="5、左移"></a>5、左移</h3><p>各二进制位全部左移若干位，高位丢弃，低位补0</p>
-<p><em>例如</em>：</p>
-<p><em><strong>shl(&lt;&lt;)</strong></em>	   1101 1000	左移2位：0110 0000</p>
-<h3 id="6、右移"><a href="#6、右移" class="headerlink" title="6、右移"></a>6、右移</h3><p>各二进制位全部右移若干位，低位丢弃，高位补0或符号位</p>
-<p><em>例如</em>：</p>
-<p><em><strong>shr(&gt;&gt;)</strong></em>	   1101 0101	右移2位补0：0011 0101</p>
-<p>C语言：</p>
+</li>
+<li>补码：<ul>
+<li>正数：补码与原码相同</li>
+<li>复数：符号位为1，其余位对原码取反+1</li>
+</ul>
+</li>
+</ul>
+<h3 id="2、举例说明"><a href="#2、举例说明" class="headerlink" title="2、举例说明"></a>2、举例说明</h3><p>-1<br>​1 0 0 0 0 0 0 1 原码<br>​1 1 1 1 1 1 1 0 反码<br>​1 1 1 1 1 1 1 1 补码 &#x2F;&#x2F;FF</p>
+<p>-7<br>​1 0 0 0 0 1 1 1 原码<br>​1 1 1 1 1 0 0 0 反码<br>​1 1 1 1 1 0 0 1 补码 &#x2F;&#x2F;F9</p>
+<h3 id="3、总结"><a href="#3、总结" class="headerlink" title="3、总结"></a>3、总结</h3><p>1）正数原（补）码存储<br>2）负数补码存储</p>
+<ul>
+<li><strong>假设数据宽度为1 BYTE（8 BIT）</strong><br>无符号数：0 1 2 3 … FF（10进制255）<br>有符号数：</li>
+<li>正数：0 … 7F</li>
+<li>​负数：FF … 80</li>
+</ul>
+<h2 id="计算机运算"><a href="#计算机运算" class="headerlink" title="计算机运算"></a>计算机运算</h2><h3 id="1、与运算"><a href="#1、与运算" class="headerlink" title="1、与运算"></a>1、与运算</h3><p>两个位都为1时，结果才为1<br><em>例如</em>：<br>​1011 0001<br>1101 1000 <em><strong>and(&amp;)</strong></em><br>-—————<br>​1001 0000</p>
+<h3 id="2、或运算"><a href="#2、或运算" class="headerlink" title="2、或运算"></a>2、或运算</h3><p>只要有一个为1就是1<br><em>例如</em>：<br>​1011 0001<br>1101 1000 <em><strong>or( | )</strong></em><br>-—————<br>​1111 1001</p>
+<h3 id="3、异或运算"><a href="#3、异或运算" class="headerlink" title="3、异或运算"></a>3、异或运算</h3><p>不一样时为1<br><em>例如</em>：<br>​1011 0001<br>1101 1000 <em><strong>xor(^)</strong></em><br>-—————<br>​0110 1001</p>
+<h3 id="4、非运算"><a href="#4、非运算" class="headerlink" title="4、非运算"></a>4、非运算</h3><p>0就是1 1就是0<br><em>例如</em>：<br>1101 1000 <em><strong>not(~)</strong></em><br>-—————<br>​0010 0111</p>
+<h3 id="5、左移"><a href="#5、左移" class="headerlink" title="5、左移"></a>5、左移</h3><p>各二进制位全部左移若干位，高位丢弃，低位补0<br><em>例如</em>：<br><em><strong>shl(&lt;&lt;)</strong></em> 1101 1000 左移2位：0110 0000</p>
+<h3 id="6、右移"><a href="#6、右移" class="headerlink" title="6、右移"></a>6、右移</h3><p>各二进制位全部右移若干位，低位丢弃，高位补0或符号位<br><em>例如</em>：</p>
+<p><em><strong>shr(&gt;&gt;)</strong></em> 1101 0101 右移2位补0：0011 0101<br>C语言：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> <span class="type">int</span> a=<span class="number">10</span>;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,a&gt;&gt;<span class="number">2</span>);</span><br></pre></td></tr></table></figure>
 
-
-
-<p><em><strong>sar(&gt;&gt;)</strong></em>	   1101 0101	右移2位补符号位：1111 0101</p>
-<p>C语言：</p>
+<p><em><strong>sar(&gt;&gt;)</strong></em> 1101 0101 右移2位补符号位：1111 0101<br>C语言：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a=<span class="number">10</span>;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,a&gt;&gt;<span class="number">2</span>);</span><br></pre></td></tr></table></figure>
 
-<h3 id="7、总结"><a href="#7、总结" class="headerlink" title="7、总结"></a>7、总结</h3><p>&#x3D;&#x3D;计算机只会做位运算&#x3D;&#x3D;</p>
-<h2 id="计算机加法"><a href="#计算机加法" class="headerlink" title="计算机加法"></a>计算机加法</h2><p><strong>4+5&#x3D;？的运算过程</strong></p>
-<p>​		0000 0100</p>
-<p>​		0000 0101</p>
-<p>加-——————-</p>
-<p>​		0000 1001</p>
+<h3 id="7、总结"><a href="#7、总结" class="headerlink" title="7、总结"></a>7、总结</h3><p><em><strong>计算机只会做位运算</strong></em></p>
+<h2 id="计算机加法"><a href="#计算机加法" class="headerlink" title="计算机加法"></a>计算机加法</h2><p><strong>4+5&#x3D;？的运算过程</strong><br>​0000 0100<br>​0000 0101<br>-——–加<br>​0000 1001</p>
 <p>计算机无法做加法，只能进行位运算：</p>
-<p><strong>1）异或</strong></p>
-<p>​		0000 0100</p>
-<p><em><strong>xor(^)</strong></em> 0000 0101</p>
-<p>-———————-</p>
-<p>​		0000 0001</p>
-<p><strong>2）判断是否有进位</strong></p>
-<p>​		0000 0100</p>
-<p><em><strong>and(&amp;)</strong></em> 0000 0101</p>
-<p>-———————</p>
-<p>​		0000 0100</p>
-<p><strong>3）继续异或</strong></p>
-<p>​		0000 0001</p>
-<p><em><strong>xor(^)</strong></em> 0000 1000	&#x2F;&#x2F;<em><strong>and</strong></em>运算后的结果<em><strong>shl</strong></em>一位</p>
-<p>-———————-</p>
-<p>​		0000 1001</p>
-<p><strong>4）判断是否有进位</strong></p>
-<p>​		0000 0001</p>
-<p><em><strong>and(&amp;)</strong></em> 0000 1000</p>
-<p>-———————-</p>
-<p>​		0000 0000</p>
+<p><strong>1）异或</strong><br>​0000 0100<br>0000 0101 <em><strong>xor(^)</strong></em><br>-————–<br>​0000 0001</p>
+<p><strong>2）判断是否有进位</strong><br>​0000 0100<br>0000 0101 <em><strong>and(&amp;)</strong></em><br>-—————<br>​0000 0100</p>
+<p><strong>3）继续异或</strong><br>​0000 0001<br>0000 1000 <em><strong>xor(^)</strong></em> &#x2F;&#x2F;<em><strong>and</strong></em>运算后的结果<em><strong>shl</strong></em>一位<br>-—————<br>​0000 1001</p>
+<p><strong>4）判断是否有进位</strong><br>​0000 0001<br>0000 1000 <em><strong>and(&amp;)</strong></em><br>-—————<br>​0000 0000</p>
 <p><strong>结果：0000 1001</strong></p>
-<h2 id="通用寄存器"><a href="#通用寄存器" class="headerlink" title="通用寄存器"></a>通用寄存器</h2><h3 id="1、寄存器"><a href="#1、寄存器" class="headerlink" title="1、寄存器"></a>1、寄存器</h3><p>存储数据：</p>
-<p>CPU &gt; 内存 &gt; 硬盘</p>
-<p>32位CPU：8 16 32</p>
-<p>64位CPU：8 16 32 64</p>
-<h3 id="2、通用寄存器"><a href="#2、通用寄存器" class="headerlink" title="2、通用寄存器"></a>2、通用寄存器</h3><p>32位通用寄存器：</p>
-<p>EAX		ESP</p>
-<p>ECX		EBP</p>
-<p>EDX		ESI</p>
-<p>EBX		EDI</p>
-<h3 id="3、MOV指令"><a href="#3、MOV指令" class="headerlink" title="3、MOV指令"></a>3、MOV指令</h3><p>&lt;1&gt;立即数到寄存器</p>
-<p>&lt;2&gt;寄存器到寄存器</p>
-<p><em><strong>mov 位置1,位置2</strong></em>	&#x2F;&#x2F;将位置2的数据复制到位置1</p>
+<h2 id="通用寄存器"><a href="#通用寄存器" class="headerlink" title="通用寄存器"></a>通用寄存器</h2><h3 id="1、寄存器"><a href="#1、寄存器" class="headerlink" title="1、寄存器"></a>1、寄存器</h3><p>存储数据：<br>CPU &gt; 内存 &gt; 硬盘<br>32位CPU：8 16 32<br>64位CPU：8 16 32 64</p>
+<h3 id="2、通用寄存器"><a href="#2、通用寄存器" class="headerlink" title="2、通用寄存器"></a>2、通用寄存器</h3><p>32位通用寄存器：<br>EAX		ESP<br>ECX		EBP<br>EDX		ESI<br>EBX		EDI</p>
+<h3 id="3、MOV指令"><a href="#3、MOV指令" class="headerlink" title="3、MOV指令"></a>3、MOV指令</h3><p>&lt;1&gt;立即数到寄存器<br>&lt;2&gt;寄存器到寄存器<br><em><strong>mov 位置1,位置2</strong></em> &#x2F;&#x2F;将位置2的数据复制到位置1</p>
 <h3 id="4、通用寄存储器"><a href="#4、通用寄存储器" class="headerlink" title="4、通用寄存储器"></a>4、通用寄存储器</h3><table>
 <thead>
 <tr>
@@ -390,59 +329,41 @@
 <td align="center">BH</td>
 </tr>
 </tbody></table>
-<p><strong>8位寄存器，L(low)低八位，H(high)高八位</strong></p>
-<p><strong>同位寄存储器之间才可以相互复制(MOV)</strong></p>
-<h2 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h2><h3 id="1、每个应用程序都会有自己的独立的4GB内存空间"><a href="#1、每个应用程序都会有自己的独立的4GB内存空间" class="headerlink" title="1、每个应用程序都会有自己的独立的4GB内存空间"></a>1、每个应用程序都会有自己的独立的4GB内存空间</h3><p><em>进程A&#x2F;B均为虚拟内存，真正使用时需投射到物理内存上发挥作用</em></p>
-<p>1 Byte&#x3D;8Bit	1KB&#x3D;1024Byte	1MB&#x3D;1024KB	1GB&#x3D;1024MB</p>
-<h3 id="2、内存地址"><a href="#2、内存地址" class="headerlink" title="2、内存地址"></a>2、内存地址</h3><p>&lt;1&gt;内存太大只能使用编号，当我们向内存中存储数据，或者从内存中读取数据时，必须用到这个编号</p>
-<p>&lt;2&gt;这个编号又称为内存地址(32位，前面0可以省略）</p>
-<p>[0x00000000]—[0xFFFFFFFF]</p>
-<p>&lt;3&gt;一个内存地址通常只能存储一个字节（1 Byte&#x3D;8 BIT）</p>
-<p>&lt;4&gt;内存地址从小到大是从上到下排列，成一倒置的梯形杯子状</p>
-<h3 id="3、MOV指令-1"><a href="#3、MOV指令-1" class="headerlink" title="3、MOV指令"></a>3、MOV指令</h3><p>&lt;1&gt;立即数到内存</p>
-<p>&lt;2&gt;寄存器到内存</p>
-<p>&lt;3&gt;内存到寄存器</p>
-<p><del>&lt;4&gt;内存到内存</del></p>
-<p><strong>MOV 数据宽度 (PTR DS) : 内存地址,位置</strong>1	&#x2F;&#x2F;将相同宽度的位置1的数据复制到内存中</p>
-<p><em>内存地址连续使用</em></p>
-<h2 id="内存地址的5种形式"><a href="#内存地址的5种形式" class="headerlink" title="内存地址的5种形式"></a>内存地址的5种形式</h2><h3 id="1、形式一-立即数"><a href="#1、形式一-立即数" class="headerlink" title="1、形式一[立即数]"></a>1、形式一[立即数]</h3><p>读取内存的值：</p>
-<p>MOV EAX,DWORD PTR DS:[0x13FFC4]</p>
-<p>像内存中写入数据：</p>
-<p>MOV DWORD PTR DS:[0x13FFC24],EAX</p>
-<h3 id="2、形式二-reg"><a href="#2、形式二-reg" class="headerlink" title="2、形式二[reg]"></a>2、形式二[reg]</h3><p>[reg]代表寄存器 可以是8个通用寄存器中的任意一个</p>
-<p>读取内存的值：</p>
-<p>MOV ECX,0x13FFD0</p>
-<p>MOV EAX,DWORD PTR DS:[ECX]</p>
-<p>向内存中写入数据：</p>
-<p>MOV EDX,0x13FFD8</p>
-<p>MOV DWORD PTR DS:[EDX],0x87654321</p>
-<h3 id="3、形式三-reg-立即数"><a href="#3、形式三-reg-立即数" class="headerlink" title="3、形式三[reg+立即数]"></a>3、形式三[reg+立即数]</h3><p>读取内存的值：</p>
-<p>MOV ECX,0x13FFD0</p>
-<p>MOV EAX,DWORD PTR DS:[ECX+4]</p>
-<p>向内存中写入数据：</p>
-<p>MOV EDX,0x13FFD8</p>
-<p>MOV DWORD PTR DS:[EDX+0xC],0x87654321</p>
-<h3 id="4、形式四-reg-reg-1-2-4-8"><a href="#4、形式四-reg-reg-1-2-4-8" class="headerlink" title="4、形式四[reg+reg*{1,2,4,8}]"></a>4、形式四[reg+reg*{1,2,4,8}]</h3><p>读取内存的值：</p>
-<p>MOV EAX,13FFC4</p>
-<p>MOV ECX,2</p>
-<p>MOV EDX,DWORD PTR DS:[EAX+ECX*4]</p>
-<p>向内存中写入数据：</p>
-<p>MOV EAX,13FFC4</p>
-<p>MOV ECX,2</p>
-<p>MOV EDX,DOWORD PTR DS:[EAX+ECX*4],87654321</p>
-<h3 id="5、形式五-reg-reg-1-2-4-8-立即数"><a href="#5、形式五-reg-reg-1-2-4-8-立即数" class="headerlink" title="5、形式五[reg+reg*{1,2,4,8}+立即数]"></a>5、形式五[reg+reg*{1,2,4,8}+立即数]</h3><p>读取内存的值：</p>
-<p>MOV EAX,13FFC4</p>
-<p>MOV ECX,2</p>
-<p>MOV EDX,DWORD PTR DS:[EAX+ECX*4+4]</p>
-<p>向内存中写入数据：</p>
-<p>MOV EAX,13FFC4</p>
-<p>MOV ECX,2</p>
-<p>MOV DWORD PTR DS:[EAX+ECX*4+4],87654321</p>
-<h2 id="小端存储模式"><a href="#小端存储模式" class="headerlink" title="小端存储模式"></a>小端存储模式</h2><h3 id="1、存储模式"><a href="#1、存储模式" class="headerlink" title="1、存储模式"></a>1、存储模式</h3><p>大端存储：数据高位在低位（内存地址），数据低位在高位</p>
-<p>0x1A2C3E4F→1A 2C 3E 4F</p>
-<p>小端存储：数据低位在低位（内存地址），数据高位在高位</p>
-<p>0x1A2C3E4F→4F 3E 2C 1A</p>
-<h2 id="常用汇编指令"><a href="#常用汇编指令" class="headerlink" title="常用汇编指令"></a>常用汇编指令</h2><table>
+<p><strong>8位寄存器，L(low)低八位，H(high)高八位</strong><br><strong>同位寄存储器之间才可以相互复制(MOV)</strong></p>
+<h2 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h2><h3 id="1、每个应用程序都会有自己的独立的4GB内存空间"><a href="#1、每个应用程序都会有自己的独立的4GB内存空间" class="headerlink" title="1、每个应用程序都会有自己的独立的4GB内存空间"></a>1、每个应用程序都会有自己的独立的4GB内存空间</h3><p><em>进程A&#x2F;B均为虚拟内存，真正使用时需投射到物理内存上发挥作用</em><br>1 Byte&#x3D;8Bit	1KB&#x3D;1024Byte	1MB&#x3D;1024KB	1GB&#x3D;1024MB</p>
+<h3 id="2、内存地址"><a href="#2、内存地址" class="headerlink" title="2、内存地址"></a>2、内存地址</h3><p>&lt;1&gt;内存太大只能使用编号，当我们向内存中存储数据，或者从内存中读取数据时，必须用到这个编号<br>&lt;2&gt;这个编号又称为内存地址(32位，前面0可以省略）<br>[0x00000000]—[0xFFFFFFFF]<br>&lt;3&gt;一个内存地址通常只能存储一个字节（1 Byte&#x3D;8 BIT）<br>&lt;4&gt;内存地址从小到大是从上到下排列，成一倒置的梯形玻璃杯状</p>
+<h3 id="3、MOV指令-1"><a href="#3、MOV指令-1" class="headerlink" title="3、MOV指令"></a>3、MOV指令</h3><p>&lt;1&gt;立即数到内存<br>&lt;2&gt;寄存器到内存<br>&lt;3&gt;内存到寄存器<br>&#x2F;&#x2F;<del>&lt;4&gt;内存到内存</del></p>
+<p><strong>MOV 数据宽度 (PTR DS) : 内存地址,位置</strong>1 &#x2F;&#x2F;将相同宽度的位置1的数据复制到内存中</p>
+<ul>
+<li><em>内存地址是连续使用的</em></li>
+</ul>
+<h2 id="内存地址的5种形式"><a href="#内存地址的5种形式" class="headerlink" title="内存地址的5种形式"></a>内存地址的5种形式</h2><h3 id="1、形式一-立即数"><a href="#1、形式一-立即数" class="headerlink" title="1、形式一[立即数]"></a>1、形式一[立即数]</h3><ul>
+<li>读取内存的值：<br>MOV EAX,DWORD PTR DS:[0x13FFC4]<br>&#x2F;&#x2F;从内存地址<code>0x13FFC4</code>开始读取一个DWORD大小的数据存入EAX寄存器中</li>
+<li>向内存中写入数据：<br>MOV DWORD PTR DS:[0x13FFC24],EAX</li>
+</ul>
+<h3 id="2、形式二-reg"><a href="#2、形式二-reg" class="headerlink" title="2、形式二[reg]"></a>2、形式二[reg]</h3><p>[reg]代表寄存器 可以是8个通用寄存器中的任意一个<br>寄存器中存储着内存地址</p>
+<ul>
+<li>读取内存的值：<br>MOV ECX,0x13FFD0<br>MOV EAX,DWORD PTR DS:[ECX]</li>
+<li>向内存中写入数据：<br>MOV EDX,0x13FFD8<br>MOV DWORD PTR DS:[EDX],0x87654321</li>
+</ul>
+<h3 id="3、形式三-reg-立即数"><a href="#3、形式三-reg-立即数" class="headerlink" title="3、形式三[reg+立即数]"></a>3、形式三[reg+立即数]</h3><ul>
+<li>读取内存的值：<br>MOV ECX,0x13FFD0<br>MOV EAX,DWORD PTR DS:[ECX+4]</li>
+<li>向内存中写入数据：<br>MOV EDX,0x13FFD8<br>MOV DWORD PTR DS:[EDX+0xC],0x87654321</li>
+</ul>
+<h3 id="4、形式四-reg-reg-1-2-4-8"><a href="#4、形式四-reg-reg-1-2-4-8" class="headerlink" title="4、形式四[reg+reg*{1,2,4,8}]"></a>4、形式四[reg+reg*{1,2,4,8}]</h3><ul>
+<li>读取内存的值：<br>MOV EAX,13FFC4<br>MOV ECX,2<br>MOV EDX,DWORD PTR DS:[EAX+ECX*4]</li>
+<li>向内存中写入数据：<br>MOV EAX,13FFC4<br>MOV ECX,2<br>MOV EDX,DOWORD PTR DS:[EAX+ECX*4],87654321</li>
+</ul>
+<h3 id="5、形式五-reg-reg-1-2-4-8-立即数"><a href="#5、形式五-reg-reg-1-2-4-8-立即数" class="headerlink" title="5、形式五[reg+reg*{1,2,4,8}+立即数]"></a>5、形式五[reg+reg*{1,2,4,8}+立即数]</h3><ul>
+<li>读取内存的值：<br>MOV EAX,13FFC4<br>MOV ECX,2<br>MOV EDX,DWORD PTR DS:[EAX+ECX*4+4]</li>
+<li>向内存中写入数据：<br>MOV EAX,13FFC4<br>MOV ECX,2<br>MOV DWORD PTR DS:[EAX+ECX*4+4],87654321</li>
+</ul>
+<h2 id="小端存储模式"><a href="#小端存储模式" class="headerlink" title="小端存储模式"></a>小端存储模式</h2><h3 id="1、存储模式"><a href="#1、存储模式" class="headerlink" title="1、存储模式"></a>1、存储模式</h3><ul>
+<li>大端存储：数据高位在低位（内存地址），数据低位在高位<br>0x1A2C3E4F→1A 2C 3E 4F</li>
+<li>小端存储：数据低位在低位（内存地址），数据高位在高位<br>0x1A2C3E4F→4F 3E 2C 1A</li>
+</ul>
+<h2 id="常用汇编指令"><a href="#常用汇编指令" class="headerlink" title="常用汇编指令"></a>常用汇编指令</h2><p>字母含义表：</p>
+<table>
 <thead>
 <tr>
 <th align="center">字母</th>
@@ -493,82 +414,62 @@
 
 <hr>
 <h3 id="8、MOVS指令"><a href="#8、MOVS指令" class="headerlink" title="8、MOVS指令"></a>8、MOVS指令</h3><p>移动数据	<strong>内存-内存</strong></p>
-<p>byte&#x2F;word&#x2F;dword</p>
+<p><em>固定为 将ESI存储的内存地址中的数据移动到EDI对应的内存地址</em></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MOVS BYTE PTR ES:[EDI],BYTE PTR DS:[ESI]	 	  简写：MOVSB</span><br><span class="line">MOVS WORD PTR ES:[EDI],BYTE PTR DS:[ESI]		  简写：MOVSW</span><br><span class="line">MOVS DWORD PTR ES:[EDI],BYTE PTR DS:[ESI]		  简写：MOVSD</span><br></pre></td></tr></table></figure>
 
-<p>MOVS指令每执行一次，两个目标地址都会自增1&#x2F;2&#x2F;4</p>
+<p>MOVS指令每执行一次，两个目标地址都会自增1&#x2F;2&#x2F;4 (Byte)</p>
 <p>EFLAGS第10位：DF位为方向标志，&#x3D;&#x3D;0时为+，1时为-&#x3D;&#x3D;</p>
-<h3 id="9、STOS指令"><a href="#9、STOS指令" class="headerlink" title="9、STOS指令"></a>9、STOS指令</h3><p>将<mark style="background: #ABF7F7A6;">AI&#x2F;AX&#x2F;EAX</mark>的值存储到<mark style="background: #ABF7F7A6;">[EDI]指定的内存单元</mark></p>
+<h3 id="9、STOS指令"><a href="#9、STOS指令" class="headerlink" title="9、STOS指令"></a>9、STOS指令</h3><p>将<mark style="background: #FF5582A6;">寄存器EAX对应数据大小的值</mark>存储到<mark style="background: #FF5582A6;">[EDI]指定的内存单元</mark></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">STOS BYTE PTR ES:[EDI]		     简写：stosb</span><br><span class="line">STOS WORD PTR ES:[EDI]		     简写：stosw</span><br><span class="line">STOS DWORD PTR ES:[EDI]		     简写：stosd</span><br></pre></td></tr></table></figure>
-
-<p><strong>STOS指令每执行一次，目标地址都会自增</strong></p>
-<h3 id="10、REP指令"><a href="#10、REP指令" class="headerlink" title="10、REP指令"></a>10、REP指令</h3><p>按<mark style="background: #ABF7F7A6;">计数寄存器(ECX)</mark>中指定的次数重复执行字符串指令</p>
-<p>REP+指令</p>
-<h2 id="堆栈相关指令"><a href="#堆栈相关指令" class="headerlink" title="堆栈相关指令"></a>堆栈相关指令</h2><h3 id="1、什么是堆栈"><a href="#1、什么是堆栈" class="headerlink" title="1、什么是堆栈"></a>1、什么是堆栈</h3><p>1）就是一块内存，操作系统在程序启动的时候已经分配好的，供程序执行时使用</p>
-<p>2）和数据结构的堆栈无关</p>
-<p>3）查看堆栈</p>
-<h3 id="2、栈指针寄存器"><a href="#2、栈指针寄存器" class="headerlink" title="2、栈指针寄存器"></a>2、栈指针寄存器</h3><p>ESP存储了当前的堆栈用到哪里</p>
-<h3 id="3、堆栈的使用"><a href="#3、堆栈的使用" class="headerlink" title="3、堆栈的使用"></a>3、堆栈的使用</h3><p>&lt;1&gt;存储数据</p>
-<p>&lt;2&gt;修改栈顶指针（栈顶指针指向当前元素）</p>
+<p><strong>STOS指令每执行一次，目标地址都会自增</strong><br>&#x2F;&#x2F;与MOVS指令修改的寄存器相同，均为EDI寄存器</p>
+<h3 id="10、REP指令"><a href="#10、REP指令" class="headerlink" title="10、REP指令"></a>10、REP指令</h3><p>按<mark style="background: #FF5582A6;">计数寄存器(ECX)</mark>中指定的次数重复执行字符串指令<br>REP + 指令</p>
+<h2 id="堆栈相关指令"><a href="#堆栈相关指令" class="headerlink" title="堆栈相关指令"></a>堆栈相关指令</h2><h3 id="1、什么是堆栈"><a href="#1、什么是堆栈" class="headerlink" title="1、什么是堆栈"></a>1、什么是堆栈</h3><p>1）就是一块<mark style="background: #FF5582A6;">内存</mark>，操作系统在程序启动的时候已经分配好的，供程序执行时使用<br>&#x2F;&#x2F;本质上就是内存，只不过是系统规划好的更加便于操作的内存区域<br>2）和数据结构的堆栈无关<br>3）查看堆栈</p>
+<h3 id="2、栈指针寄存器"><a href="#2、栈指针寄存器" class="headerlink" title="2、栈指针寄存器"></a>2、栈指针寄存器</h3><p><mark style="background: #FF5582A6;">ESP</mark>存储了当前的<mark style="background: #FF5582A6;">堆栈用到哪里</mark></p>
+<h3 id="3、堆栈的使用"><a href="#3、堆栈的使用" class="headerlink" title="3、堆栈的使用"></a>3、堆栈的使用</h3><p>&lt;1&gt;存储数据<br>&lt;2&gt;修改栈顶指针（栈顶指针指向当前元素）</p>
 <p><mark style="background: #ABF7F7A6;">堆栈使用时是从大地址到小地址</mark></p>
 <ul>
 <li>局部变量一定要赋初始值</li>
 </ul>
-<h3 id="4、PUSH指令"><a href="#4、PUSH指令" class="headerlink" title="4、PUSH指令"></a>4、PUSH指令</h3><p>&lt;1&gt;向堆栈中压入数据</p>
-<p>&lt;2&gt;修改栈顶指针ESP寄存器（减少）</p>
+<h3 id="4、PUSH指令"><a href="#4、PUSH指令" class="headerlink" title="4、PUSH指令"></a>4、PUSH指令</h3><p>&lt;1&gt;向堆栈中压入数据<br>&lt;2&gt;修改栈顶指针ESP寄存器（变小，即向上移动）</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1、PUSH r32</span><br><span class="line">2、PUSH r16</span><br><span class="line"></span><br><span class="line">3、PUSH m32</span><br><span class="line">4、PUSH m16</span><br><span class="line"></span><br><span class="line">5、PUSH imm8/16/32</span><br></pre></td></tr></table></figure>
 
-<h3 id="5、POP指令"><a href="#5、POP指令" class="headerlink" title="5、POP指令"></a>5、POP指令</h3><p>&lt;1&gt;将栈顶数据存储到寄存器&#x2F;内存</p>
-<p>&lt;2&gt;修改栈顶指针ESP寄存器（增加）</p>
+<h3 id="5、POP指令"><a href="#5、POP指令" class="headerlink" title="5、POP指令"></a>5、POP指令</h3><p>&lt;1&gt;将栈顶数据存储到寄存器&#x2F;内存<br>&lt;2&gt;修改栈顶指针ESP寄存器（增加，即向下移动）</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1、POP r32</span><br><span class="line">2、POP r16</span><br><span class="line"></span><br><span class="line">3、POP m32</span><br><span class="line">4、POP m16</span><br></pre></td></tr></table></figure>
 
 <h2 id="修改EIP指令"><a href="#修改EIP指令" class="headerlink" title="修改EIP指令"></a>修改EIP指令</h2><ul>
-<li>EIP中存储的值是CPU执行下一次命令的地址</li>
+<li><mark style="background: #FF5582A6;">EIP</mark>中存储的值是<mark style="background: #FF5582A6;">CPU执行下一次命令的地址</mark></li>
 </ul>
 <h3 id="1、JMP指令"><a href="#1、JMP指令" class="headerlink" title="1、JMP指令"></a>1、JMP指令</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MOV EIP,r/m/imm</span><br></pre></td></tr></table></figure>
-
 <p>简写为：<code>JMP r/m/imm</code></p>
-<h3 id="2、CALL指令"><a href="#2、CALL指令" class="headerlink" title="2、CALL指令"></a>2、CALL指令</h3><p>push下一行地址</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MOV EIP，r/m/imm</span><br></pre></td></tr></table></figure>
-
+<h3 id="2、CALL指令"><a href="#2、CALL指令" class="headerlink" title="2、CALL指令"></a>2、CALL指令</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">push下一行地址</span><br><span class="line">MOV EIP，r/m/imm</span><br></pre></td></tr></table></figure>
 <p>简写为：<code>CALL r/m/imm</code></p>
-<p><mark style="background: #ABF7F7A6;">与JMP唯一区别</mark>：<br>在堆栈中存储 <mark style="background: #FF5582A6;">反汇编窗口处CALL指令下一行的地址</mark></p>
+<ul>
+<li>与JMP唯一区别：<br>在堆栈中存储 <mark style="background: #FF5582A6;">反汇编窗口处CALL指令下一行的地址</mark><br>&#x2F;&#x2F;可以结合RET指令，实现随时随地调用目标函数</li>
+</ul>
 <h3 id="3、RET指令"><a href="#3、RET指令" class="headerlink" title="3、RET指令"></a>3、RET指令</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ADD ESP,4</span><br><span class="line">MOV EIP,[ESP-4]</span><br></pre></td></tr></table></figure>
-
-<p>简写为<code>RET</code></p>
-<p><code>RET imm</code>效果等价于</p>
+<p>简写为<code>RET</code><br><code>RET imm</code>效果等价于</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">RET</span><br><span class="line">​ADD ESP,imm</span><br></pre></td></tr></table></figure>
 
-<h2 id="反调试之Fake-F8"><a href="#反调试之Fake-F8" class="headerlink" title="*反调试之Fake F8"></a>*反调试之Fake F8</h2><h3 id="1、单步步入-过"><a href="#1、单步步入-过" class="headerlink" title="1、单步步入&#x2F;过"></a>1、单步步入&#x2F;过</h3><p>单步步入（F7） 单步步过（F8）</p>
-<p>&lt;1&gt;单步步入与单步步过的区别</p>
-<p>&lt;2&gt;调试器实现原理：</p>
-<p>​	​	断点：0xCC</p>
-<p>​	​	单步步入：设置EFLAGS的TF位</p>
-<p>​	​	​单步步过：在下一行设置断点</p>
-<h3 id="2、反调试思路"><a href="#2、反调试思路" class="headerlink" title="2、反调试思路"></a>2、反调试思路</h3><p>堆大量CALL指令，CALL指令中塞满无用代码</p>
+<h2 id="反调试之Fake-F8"><a href="#反调试之Fake-F8" class="headerlink" title="*反调试之Fake F8"></a>*反调试之Fake F8</h2><h3 id="1、单步步入-过"><a href="#1、单步步入-过" class="headerlink" title="1、单步步入&#x2F;过"></a>1、单步步入&#x2F;过</h3><p>单步步入（F7） 单步步过（F8）<br>&lt;1&gt;单步步入与单步步过的区别：<br>单步步入：设置EFLAGS的TF位，每一次执行设置一个断点<br>​单步步过：在下一行设置断点</p>
+<p>&lt;2&gt;调试器实现原理：<br>断点：0xCC（int 3）</p>
+<h3 id="2、反调试思路"><a href="#2、反调试思路" class="headerlink" title="2、反调试思路"></a>2、反调试思路</h3><p>堆大量CALL指令，CALL指令中塞满无用代码（花指令）</p>
 <h2 id="汇编眼中的函数"><a href="#汇编眼中的函数" class="headerlink" title="汇编眼中的函数"></a>汇编眼中的函数</h2><h3 id="1、什么是函数"><a href="#1、什么是函数" class="headerlink" title="1、什么是函数"></a>1、什么是函数</h3><p>函数就是一系列<mark style="background: #ABF7F7A6;">指令的集合</mark>，为了完成某个会重复使用的特定功能</p>
-<h3 id="2、函数的调用"><a href="#2、函数的调用" class="headerlink" title="2、函数的调用"></a>2、函数的调用</h3><p>&lt;1&gt;用<strong>JMP</strong>来执行函数</p>
-<p>&lt;2&gt;用<strong>CALL</strong>来执行函数</p>
-<h3 id="3、参数与返回值"><a href="#3、参数与返回值" class="headerlink" title="3、参数与返回值"></a>3、参数与返回值</h3><p>一般用<mark style="background: #FF5582A6;">EAX</mark>存储返回值</p>
-<p>&#x2F;&#x2F;参数就是需要操作的数据，返回值就是操作后的结果数据</p>
+<h3 id="2、函数的调用"><a href="#2、函数的调用" class="headerlink" title="2、函数的调用"></a>2、函数的调用</h3><p>&lt;1&gt;用<strong>JMP</strong>来执行函数<br>&lt;2&gt;用<strong>CALL</strong>来执行函数</p>
+<h3 id="3、参数与返回值"><a href="#3、参数与返回值" class="headerlink" title="3、参数与返回值"></a>3、参数与返回值</h3><p>一般用<mark style="background: #FF5582A6;">EAX</mark>存储返回值<br>&#x2F;&#x2F;参数就是需要操作的数据，返回值就是操作后的结果数据</p>
 <h2 id="堆栈传参-堆栈平衡"><a href="#堆栈传参-堆栈平衡" class="headerlink" title="堆栈传参_堆栈平衡"></a>堆栈传参_堆栈平衡</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MOV EAX,DWORD PTR DS:[ESP+4]</span><br></pre></td></tr></table></figure>
 
 <p>EAX一定会取得堆栈中的参数</p>
 <hr>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">MOV EAX,DWORD PTR DS:[ESP+14]</span><br><span class="line">MOV EAX,DWORD PTR DS:[ESP+10]</span><br><span class="line">MOV EAX,DWORD PTR DS:[ESP+C]</span><br><span class="line">MOV EAX,DWORD PTR DS:[ESP+8]</span><br><span class="line">MOV EAX,DWORD PTR DS:[ESP+4]</span><br></pre></td></tr></table></figure>
 
-<p>实现<mark style="background: #ABF7F7A6;">多个参数的相加</mark></p>
-<h2 id="堆栈平衡"><a href="#堆栈平衡" class="headerlink" title="堆栈平衡"></a>堆栈平衡</h2><p>1）如果要返回父程序，则当我们在堆栈中进行堆栈的操作的时候，一定要保证在RET这条指令之前，ESP指向的是我们压入栈中的地址</p>
+<p>实现多个参数的相加</p>
+<h2 id="堆栈平衡"><a href="#堆栈平衡" class="headerlink" title="堆栈平衡"></a>堆栈平衡</h2><p>1）如果要返回父程序，则当我们在堆栈中进行堆栈的操作的时候，一定要保证在RET这条指令之前，<mark style="background: #FF5582A6;">ESP指向的是我们压入栈中的地址</mark>（如CALL指令存储的地址）</p>
 <p>2）如果通过堆栈传递参数了，那么在函数执行完毕后，要平衡参数导致的堆栈变化</p>
-<h2 id="ESP寻址"><a href="#ESP寻址" class="headerlink" title="ESP寻址"></a>ESP寻址</h2><h3 id="1、寄存器传参与堆栈传参"><a href="#1、寄存器传参与堆栈传参" class="headerlink" title="1、寄存器传参与堆栈传参"></a>1、寄存器传参与堆栈传参</h3><p>举例：</p>
-<p>寄存器传参：MOV r，r</p>
-<p>堆栈传参：push imm</p>
+<h2 id="ESP寻址"><a href="#ESP寻址" class="headerlink" title="ESP寻址"></a>ESP寻址</h2><h3 id="1、寄存器传参与堆栈传参"><a href="#1、寄存器传参与堆栈传参" class="headerlink" title="1、寄存器传参与堆栈传参"></a>1、寄存器传参与堆栈传参</h3><p>举例：<br>寄存器传参：MOV r，r<br>堆栈传参：push imm</p>
 <h3 id="2、ESP寻址"><a href="#2、ESP寻址" class="headerlink" title="2、ESP寻址"></a>2、ESP寻址</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">push 1</span><br><span class="line">push 2</span><br><span class="line">call 目标函数起始地址</span><br><span class="line">add esp,8   //外平栈</span><br><span class="line"></span><br><span class="line">mov eax,dword ptr ss:[esp+4]</span><br><span class="line">add eax,dword ptr ss:[esp+8]</span><br><span class="line">ret</span><br></pre></td></tr></table></figure>
 
-<h3 id="3、ESP寻址的缺点"><a href="#3、ESP寻址的缺点" class="headerlink" title="3、ESP寻址的缺点"></a>3、ESP寻址的缺点</h3><p>由于ESP指向栈顶的值，会频繁受指令影响</p>
-<p>导致ESP寻址不适用于过于复杂的代码</p>
-<h2 id="EBP寻址"><a href="#EBP寻址" class="headerlink" title="EBP寻址"></a>EBP寻址</h2><p>ESP栈顶指针、EBP栈底指针</p>
-<p>利用EBP存储原先ESP的值，再利用相对固定的EBP寻址，<mark style="background: #ABF7F7A6;">不会受到函数指令影响</mark></p>
+<h3 id="3、ESP寻址的缺点"><a href="#3、ESP寻址的缺点" class="headerlink" title="3、ESP寻址的缺点"></a>3、ESP寻址的缺点</h3><p>由于ESP指向栈顶的值，而堆栈会被频繁使用，受各种指令影响<br>导致ESP寻址不适用于过于复杂的代码</p>
+<h2 id="EBP寻址"><a href="#EBP寻址" class="headerlink" title="EBP寻址"></a>EBP寻址</h2><p>ESP栈顶指针、EBP栈底指针<br>利用EBP存储原先ESP的值，再利用相对固定的EBP寻址，<mark style="background: #ABF7F7A6;">不会受到函数指令影响</mark></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">push 1</span><br><span class="line">push 2</span><br><span class="line">call 目标函数起始地址</span><br><span class="line">add esp,8     //外平栈</span><br><span class="line"></span><br><span class="line">push ebp​	​  //将ebp的值存到堆栈里</span><br><span class="line">mov ebp,esp​​​   //将ebp指向esp的位置</span><br><span class="line">sub esp,10    //上移esp</span><br><span class="line"></span><br><span class="line">mov eax,dword ptr ss:[ebp+8]</span><br><span class="line">add eax,dword ptr ss:[ebp+c]</span><br><span class="line"></span><br><span class="line">mov esp,ebp   //平衡esp&lt;1&gt;</span><br><span class="line">pop ebp​	​	​  //平衡ebp,平衡esp&lt;2&gt;</span><br></pre></td></tr></table></figure>
 
 <h2 id="JCC"><a href="#JCC" class="headerlink" title="JCC"></a>JCC</h2><h3 id="1、标志寄存器EFLAGS"><a href="#1、标志寄存器EFLAGS" class="headerlink" title="1、标志寄存器EFLAGS"></a>1、标志寄存器EFLAGS</h3><img src="/2025/11/24/Reverse/%E6%BB%B4%E6%B0%B4-%E5%8F%8D%E6%B1%87%E7%BC%96/Snipaste_2025-11-07_18-32-47.png" class="">
